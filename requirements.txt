@@ -1,0 +1,8 @@
+# maybe use keras text hyphenator and tokenizer
+segtok
+stringdist
+num2words
+hyphenate
+# https://pygtrie.readthedocs.io/en/latest/
+pygtrie
+ijson

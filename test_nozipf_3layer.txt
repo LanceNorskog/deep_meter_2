@@ -1,0 +1,277 @@
+capture
+
+['And found his whole good-breeding scarce enough.']
+['and', 'scarce', 'his', 'hi', 'a', 'for', 'his', 'his', 'a', 'need']
+
+['Of humble seeming: and, behind them all,']
+['of', 'humble', 'and', 'and', 'hum', 'and', 'hum', 'a', 'MIRE']
+
+['Behind his head upon the shoulders lay,']
+['above', 'his', 'neck', 'him', 'head', 'rhead', 'shole', 'his', 'lay']
+
+['Discover countries, with a kindred heart']
+['a', 'SKUH', 'the', 'world', 'shuns', 'and', 'shuns', 'world', 'shuns', 'world']
+
+['Was open in his praise, and plaudits rose']
+['was', 'joyed', 'and', 'faith', 'and', 'and', 'his', 'grey', 'was', 'heart']
+
+['A spear the hero bore of wondrous strength,']
+['a', 'mighty', 'sword', 'the', 'spear', 'a', 'sword', 'of', 'spear']
+
+['Were things indifferent to the Shepherds thoughts.']
+['was', 'those', 'the', 'PLEH', 'FRENT', 'SHEH', 'the', 'shepherds', 'thoughts']
+
+['That to the young supplies a guiding light,']
+['the', 'them', 'the', 'heart', 'the', 'P AE S', 'the', 'watch', 'the', 'seevs']
+
+['Of Greeks a mighty army, all in vain;']
+['of', 'all', 'the', 'AR', 'the', 'Greeks', 'the', 'joust', 'of', 'Greeks']
+
+['Into the mighty vision passing--there,']
+['from', 'to', 'the', 'MY', 'the', 'VIH', 'the', 'of', 'the', 'ond']
+
+['Them in his anger, whom his anger saves']
+['his', 'those', 'his', 'ANG', 'his', 'ANG', 'his', 'ANG', 'his', 'saves']
+
+['And in the soul within the sense began']
+['and', 'the', 'the', 'soul', 'N AH L', 'S P IH', 'the', 'soul', 'the', 'made']
+
+['For Daphnis reigns above, and deals from thence']
+['to', 'LOFF', 'and', 'yawn', 'and', 'thence', 'and', 'day', 'to', 'yield']
+
+['For one that looked with such a captains mien:']
+['for',' 'he', 'the', 'would', 'the', 'custom', 'was', 'was', 'NOUN']
+
+['Of thought between her fingers and her brain,']
+['to', 'thought', 'her', 'B AA', 'her', 'of', 'her', 'THIN', 'her', 'brain']
+
+['And still the red sedan of rank appeals,']
+['and', 'still', 'the', 'CHEE', 'the', 'JUH', 'the', 'FAIR', 'the', 'crown']
+
+['With this eternal silence;--more a god,']
+['with', 'TER', 'IH', 'SPIH', 'IH', 'god', 'eternal', 'god']
+
+['Forgot, nutritious, grateful to the taste,']
+['and', 'health', 'the', 'goodness', 'sweet', 'the', 'LEE', 'the', 'taste']
+
+['Of full perfection prompt his daring dream,']
+['his', 'dream', 'his', 'dreams', 'NYUS', 'WUN', 'his', 'dream', 'his', 'bliss']
+
+['And all the spaces of the midnight town']
+['and', 'all', 'the', 'PRINN', 'the', 'of', 'the', 'of', 'the', 'rooms']
+
+['The sandbar sings in moonlit veils of foam.']
+['the', 'corral', 'sings', 'the', 'in', 'the', 'M ER', 'the', 'shore']
+
+['And darkness settled on the outer world.']
+['and', 'earth', 'the', 'dark', 'the', 'dark', 'the', 'of', 'the', 'earth']
+
+['Or castle, high embattled on the point']
+['or', 'in', 'the', 'cow', 'the', 'wall', 'the', 'decks', 'side', 'hole']
+
+['The each with All in one, sublime design?']
+['of', 'shape', 'and', 'and', 'and', 'all', 'and', 'each', 'of', 'these']
+
+['The curving prow, the tall and stately mast,']
+['the', 'LOFF', 'of', 'masts', 'the', 'LOFF', 'the', 'LOFF', 'the', 'mast']
+
+['And bids anew the martial thunder rise.']
+['and', 'lifts', 'the', 'B AE', 'the', 'to', 'the', 'RY', 'the', 'GEN']
+
+['And hearing harlot muttered twice or thrice,']
+['and', 'said', 'the', 'loud', 'a', 'heard', 'in', 'cried', 'a', 'lips']
+
+['That evening passed with music, chat, and song,']
+['a', 'music, 'music, 'music, 'chat', 'was', 'chat']
+
+['With childlike pleasure at the blooming sun;']
+['with', 'MIDST', 'A', 'LIH', 'the', 'of', 'the', 'S AH', 'the', 'day']
+
+['And send her back with gentle words to earth']
+['and', 'give', 'her', 'FRI', 'her', 'her', 'her', 'her', 'her', 'her']
+
+['With glowing eyes and pale, unsmiling face,']
+['with', 'eyes', 'a', 'eyes', 'and', 'dark', 'with', 'face', 'cast', 'eyes']
+
+['Its beauties first? That she will show to me']
+['this', 'beauty', 'AY', 'this', 'my', 'her', 'love', 'FEKT', 'me']
+
+['A man is likewise counsel for himself,']
+['a', 'man', 'a', 'P R UW', 'the', 'man', 'in', 'S ER N', 'a', 'man']
+
+['And awful, mighty eyes that cowed and held']
+['and', 'all', 'with', 'horror', 'eyes', 'and', 'gust', 'of', 'gust']
+
+['Of thoughts revolved, his final sentence chose']
+['to', 'what', 'his', 'word', 'MIH', 'thus', 'his',' 'he', 'R IH', 'said']
+
+['His head, his shoulders, and his knees embraced;']
+['his', 'shoulders', 'bowed', 'his', 'STEN', 'his', 'NEATH', 'his', 'frame']
+
+['And came into the vale in little space,']
+['and', 'stood', 'a', 'in', 'a', 'in', 'the', 'of', 'the', 'veil']
+
+['In forest wild, in thicket, brake, or den;']
+['in', 'woods', 'or', 'dale', 'or', 'TH IH', 'or', 'woods', 'L and', 'bush']
+
+['In spite of changes. Look for me until']
+['to', 'for', 'and', 'AY', 'and', 'and', 'and', 'AY', 'to', 'T IH L']
+
+['The parchment of the future, it were vain--']
+['the', 'PREH', 'was', 'PARCH', 'its', 'forced', 'its', 'work', 'was', 'SPIRED']
+
+['The spirits of the Seasons seem to stand.']
+['the', 'all', 'the', 'of', 'the', 'KAH', 'the', 'in', 'the', 'spring']
+
+['For lo! his passion, but an art of craft,']
+['of', 'work', 'test', 'P AE', 'his', 'work', 'his', 'work', 'of', 'art']
+
+['Is due, and not to war, intrepid still']
+['s', 'still', 'a', 'to', 'in', 'still', 'the', 'war', 'the', 'war']
+
+['Or sleeping, walk a restless world of dreams.']
+['or', 'sleep', 'in', 'sleep', 'the', 'sleep', 'the', 'sleep', 'L IY', 'sleep']
+
+['Of teaching school, a school of Czechs and Poles']
+['of', 'P AH', 'the', 'K AH N', 'the', 'of', 'STUMZ', 'of', 'the', 'school']
+
+['And drops of blood bedew the conscious lawn;']
+['and', 'like', 'of', 'dust', 'the', 'shrubs', 'the', 'of', 'the', 'dust']
+
+['From daylight till the evening, wet or fine,']
+['in', 'BA', 'the', 'cowl', 'or', 'hat', 'the', 'height', 'or', 'cold']
+
+['A doom that ever poised itself to fall,']
+['a', 'dread', 'of', 'of', 'of', 'tuh', 'a', 'far', 'of', 'doom']
+
+['Of wailing women pierce the vaulted skies.']
+['of', 'arms', 'the', 'wih', 'the', 'skies', 'the', 'veils', 'the', 'skies']
+
+['To happy havens under all the sky,']
+['to', 'all', 'the', 'joy', 'the', 'SPEE', 'the', 'he', 'the', 'sky']
+
+['In purple clusters hangs the vines increase,']
+['the', 'P ER', 'BALLS', 'YEH', 'the', 'YEH', 'the', 'YEH', 'low', 'spanned']
+
+['A shepherd meeting thee, the oar surveys,']
+['the', 'cap', 'sun', 'LEE', 'the', 'cap', 'the', 'cap', 'the', 'or']
+
+['The printed passion of the dream remains:--']
+['the', 'saw', 'of', 'of', 'trance', 'and', 'the', 'signs', 'of', 'muse']
+
+['And piecemeal shares and maims the felon round.']
+['and', 'S EH', 'and', 'bank', 'and', 'and', 'the', 'in', 'the', 'bank']
+
+['A happy nation, and a happy king.']
+['the', 'cheery', 'proud', 'tree', 'and', 'his', 'happy', 'state']
+
+['And Miscreator, makes and helps along']
+['and', 'with', 'the', 'all', 'the', 'all', 'the', 'good', 'the', 'to']
+
+['The dashing waters when the air is still']
+['the', 'sea', 'ling', 'water', 'water', 'wah', 'the', 'er']
+
+['And still its ice the freezing silence kept:']
+['that', 'still', 'it', 'flame', 'its', 'V AE', 'its', 'burns', 'a', 'flame']
+
+['That shrink in misty mournfulness from sight,']
+['that', 'crim', 'the', 'shadow', 'of', 'the', 'EH', 'D ER', 'AY']
+
+['And secret seeds of envy, lay behind;']
+['and', 'all', 'the', 'T R EH', 'the', 'of', 'the', 'V ER', 'the', 'there']
+
+['Of trees and crack of branches, common things,']
+['of', 'trees', 'and', 'trees', 'and', 'trees', 'and', 'things', 'and', 'things']
+
+['And pious tribute at her altars pay:']
+['and', 'pie', 'her', 'gifts', 'her', 'for', 'her', 'of', 'the', 'shrime']
+
+['Courageous, and refreshed for future toil,']
+['R IH', 'W IH', 'JH AH S', 'toil', 'AH JH', 'and', 'a', 'brave', 'to', 'vain']
+
+['Upon the wall and windows blots of gilt.']
+['a', 'neath', 'the', 'marble', 'court', 'and', 'of', 'the', 'hole']
+
+['And lay upon the threshold like a log.']
+['and', 'plant', 'a', 'thresh', 'a', 'thresh', 'old', 'of', 'the', 'ground']
+
+['In synod unbenign; and taught the fixed']
+['a', 'for', 'the', 'first', 'the', 'and', 'the', 'deigned', 'the', 'taught]
+
+['And left him to his rest.  An end of Love.']
+['and', 'left', 'him', 'left', 'to', 'left', 'his', 'love', 'a', 'love']
+
+['And human hearts and minds to show it by,']
+['and', 'hue', 'the', 'human', 'human', 'human', 'heart']
+
+['The outward struggle and the inward strife.']
+['the', 'conflict', 'STRUH', 'the', 'and', 'the', 'and', 'of', 'strife']
+
+['His arms and bosom, seem to melt away.']
+['his', 'arms', 'are', 'limbs', 'are', 'all', 'his', 'limbs', 'with', 'sweat']
+
+['And noise, and tumult rises from the crowd.']
+['and', 'crowd', 'a', 'loud', 'the', 'NOY', 'the', 'in', 'the', 'air']
+
+['Cannot devise a torment, so it be']
+['cannot', 'a', 'not', 'by', 'by', 'it', 'by', 'DIH', 'DYUR']
+
+['The damsel put the pair without reply:']
+['the', 'damsel', 'and', 'them', 'both', 'and', 'might', 'to', 'fled']
+
+['Or that it hardens more and helps to bind']
+['or', 'that', 'it', 'in', 'or', 'stroke', 'or', 'bind', 'the', 'move']
+
+['And flowing waters, and the starry flame,']
+['and', 'sounds', 'and', 'oh', 'the', 'oh', 'the', 'and', 'the', 'blue']
+
+['The spoil or spoiler? this behold in me;']
+['the', 'S IY', 'R IY', 'of', 'the', 'of', 'the', 'IH Z', 'the', 'cup']
+
+['And rode with them, and spake to none; the day']
+['and', 'BADE', 'themselves', 'the', 'pain', 'and', 'men', 'and', 'men']
+
+['Of finest metal was her armour bright,']
+['her', 'shield', 'and', 'armor', 'armed', 'ER N', 'few', 'of', 'vest']
+
+['The doleful city all around invest,']
+['the', 'FURS', 'the', 'SIH', 'the', 'SIH', 'the', 'rich', 'the', 'plane']
+
+['Of crowded cities, was from passing tale']
+['the', 'SIH', 'the', 'city', 'SIH', 'the', 'city', 'streets']
+
+['An Arab fearless as the face of Truth']
+['a', 'proud', 'FULL', 'FEAR', 'a', 'of', 'a', 'of', 'of', 'men']
+
+['It lightened toil, and took the edge from pain,']
+['it', 'pain', 'and', 'STRAH', 'and', 'and', 'it', 'TER', 'the', 'pain']
+
+['That brought with it another civil war.']
+['that', 'fought', 'the', 'since', 'the', 'S IH', 'the', 'S IH', 'B IH', 'war']
+
+['Apart from all, in pride of conscious strength,']
+['of', 'strong', 'K W AH L', 'W IY K', 'AH JH', 'strength', 'AH JH', 'strength', 'of', 'strength']
+
+['And far and near throughout the land the men']
+['and', 'in', 'the', 'men', 'and', 'of', 'the', 'broad', 'the', 'men']
+
+['Remembered--I. And, oh! a little while']
+['in', 'L IH', 'tall', 'while', 'and', 'L IH', 'tall', 'far', 'there', 'more']
+
+['And clip his borders short, and drive his herds,']
+['and', 'herds', 'his', 'N EY', 'and', 'F AO', 'his', 'in', 'his', 'plains']
+
+['And suffer me in anguish to depart']
+['and', 'leave', 'for', 'WIH', 'and', 'ang', 'in', 'EH', 'DIH', 'DURE']
+
+['The king from sovereign peril saved his head,']
+['the', 'SUN', 'the', 'king', 'the', 'lost', 'the', 'was', 'the', 'king']
+
+['The point is turned; the twilight shadow fills']
+['the', 'G EH N', 'L AY T', 'D IY', 'the', 'SH AE', 'the', 'seems', 'to', 'fade']
+
+['Arriving all confused among the rest']
+['a', 'vain', 'DING', 'and', 'a', 'and', 'the', 'N AH', 'a', 'W EY']
+
+
+
