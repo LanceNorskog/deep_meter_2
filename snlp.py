@@ -1,4 +1,4 @@
-# read S-tree format from nltk.parse.stanford.GenericStanfordParser.parse_sents() method
+# S-tree format from Penn Treebank tags
 # really just MultiNLI data
 # generate certain sentence or clause variations
 
@@ -40,6 +40,7 @@ def flatten(t):
         out.append(x)
     return out
 
+# don't use, only a problem with SNLI corpus
 def punct(words):
     # hanging possessive problem with SNLI corpus
     if words[0] == "'" or words[0] == "'s":
@@ -59,14 +60,16 @@ def punct(words):
     
 
 # sample = '(ROOT (S (NP (DT This) (NN site)) (VP (VBZ includes) (NP (NP (NP (DT a) (NN list)) (PP (IN of) (NP (DT all) (NN award) (NNS winners)))) (CC and) (NP (NP (DT a) (JJ searchable) (NN database)) (PP (IN of) (NP (NNP Government) (NNP Executive) (NNS articles)))))) (. .)))'
-sample = '(ROOT (S (NP (PRP I)) (VP (VP (VBP like) (NP (PRP him)) (PP (IN for) (NP (DT the) (JJS most) (NN part)))) (, ,) (CC but) (VP (MD would) (ADVP (RB still)) (VP (VB enjoy) (S (VP (VBG seeing) (S (NP (NN someone)) (VP (VB beat) (NP (PRP him))))))))) (. .)))'
+# sample = '(ROOT (S (NP (PRP I)) (VP (VP (VBP like) (NP (PRP him)) (PP (IN for) (NP (DT the) (JJS most) (NN part)))) (, ,) (CC but) (VP (MD would) (ADVP (RB still)) (VP (VB enjoy) (S (VP (VBG seeing) (S (NP (NN someone)) (VP (VB beat) (NP (PRP him))))))))) (. .)))'
+# sample = "(NP (NP (DT a) (JJ honorary) (NN monument)) (PP (IN with) (NP (ADJP (JJ red) (JJ white) (CC and) (JJ blue)) (NNS flowers) (CC and) (NNS flags))))"
+sample = "(NP (NP (DT A) (NN bathroom)) (PP (IN with) (NP (NP (NNS walls)) (SBAR (WHNP (WDT that)) (S (VP (VBP are) (VP (VBN painted) (ADJP (NN baby) (JJ blue)))))))) (. .))"
 
 def filter_f(t):
-    print("'" + t.label() + "'")
+    # print("'" + t.label() + "'")
     return True
 
 def filter_RB(t):
-    return t.label() != 'ADVP'
+    return t.label() != 'RB'
 
 def strip(t, labs):
     treeType = type(t)
@@ -74,7 +77,7 @@ def strip(t, labs):
         i = len(t) - 1
         while i > -1:
             if type(t[i]) == treeType and t[i].label() in labs:
-                # print('removing {} from t ({})'.format(i, t, t[i]))
+                print('removing [{}] from t ({})'.format(i, t, t[i]))
                 t.pop(i)
                 i = len(t) - 1
             else:
@@ -87,10 +90,10 @@ def strip(t, labs):
         bad = []
         for i in range(len(t) - 1, 0, -1):
             if type(t[i]) == treeType and t[i].label() in labs:
-                print('removing {} from t ({})'.format(i, t, t[i]))
+                # print('removing {} from t ({})'.format(i, t, t[i]))
                 bad += [i]
         for i in bad:
-            print('Remove {} from {}'.format(t[i], t))
+            # print('Remove {} from {}'.format(t[i], t))
             t.pop(i)
         for sub in t:
             if type(sub) == treeType:
@@ -100,17 +103,42 @@ def strip(t, labs):
     walk(t)
     return t
 
-# given a parse tree, return all subtrees with any and all POS label subtrees removed
+# given a parse tree, return all subtrees with any and all given label subtrees removed
 def combos(t, labs):
     global num_combo
     out = {}
     for lab in list(powerset(labs)):
         print(list(lab))
         t2 = strip(t, list(lab))
-        for x in clauses(t2, _min=1, _max=7, _minlen=10):
+        for x in clauses(t2, _min=1, _max=7, _minlen=2):
             out[str(x)] = x
     num_combo += len(out.keys())
-    return out.keys()
+    return out.values()
+
+def droplab(t, lab):
+    out = {}
+    for st in strip(t, [lab]):
+        out[str(st)] = st
+    return out.values()
+
+def clipped(t, labs):
+    for st in t.subtrees():
+        if type(st) == type('str'):
+            continue
+        for lab in labs:
+            for t2 in droplab(st, lab):
+                if type(t2) == type('str'):
+                    continue
+                for c in clauses(t2, _min=2, _max=12, _minlen=3):
+                    yield c
+        
+def clipped_unique(t, labs):
+    out = {}
+    for x in clauses(t, _min=2, _max=12, _minlen=3):
+        out[str(x)] = x
+    for x in clipped(t, labs):
+        out[str(x)] = x
+    return out.values()
 
 # print stats
 def stats():
@@ -125,13 +153,20 @@ if __name__ == '__main__':
     
     t = Tree.fromstring(sample)
     print('all:')
-    for x in clauses(t, _min=3, _max=10):
+    for x in t.subtrees():
         print(x)
-    print('\nno adverbs:')
-    t2 = strip(t, ['PP'])
-    for x in clauses(t2, filter=filter_RB, _min=2, _max=5, _minlen=10):
+    print('clipped: ')
+    for x in clipped_unique(t, ['ADJP', 'WHNP']):
         print(x)
-    print('\ncombos with various words ripped')
-    for c in combos(t, ['RB', 'PP']):
-        print(c)
-    stats()
+    #print('\nno adjective phrases (strip):')
+    #for st in t.subtrees():
+    #    if type(st) == type('str'):
+    #        continue
+    #    print(st)
+    #    for t2 in droplab(st, 'WHNP'):
+    #        if type(t2) == type('str'):
+    #            continue
+    #        print('* {}'.format(t2))
+    #        for c in clauses(t2, _min=2, _max=5, _minlen=3):
+    #            print('> {}'.format(c))
+    ##    
