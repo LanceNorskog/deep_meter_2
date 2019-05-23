@@ -77,7 +77,7 @@ def strip(t, labs):
         i = len(t) - 1
         while i > -1:
             if type(t[i]) == treeType and t[i].label() in labs:
-                print('removing [{}] from t ({})'.format(i, t, t[i]))
+                # print('removing [{}] from t ({})'.format(i, t, t[i]))
                 t.pop(i)
                 i = len(t) - 1
             else:
@@ -108,7 +108,7 @@ def combos(t, labs):
     global num_combo
     out = {}
     for lab in list(powerset(labs)):
-        print(list(lab))
+        # print(list(lab))
         t2 = strip(t, list(lab))
         for x in clauses(t2, _min=1, _max=7, _minlen=2):
             out[str(x)] = x

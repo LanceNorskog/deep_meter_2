@@ -5,15 +5,19 @@ import sys
 import snlp
 import cmudict
 
-nsyll=5
-
 cd = cmudict.CMUDict()
 
-# TODO
-# looking good except for sentences with hyphenated words.
-# they don't get clipped, just keep going ??
-
-
+# Find single lines of Haiku inside Constituency Parse output.
+# Search for 5-syllable and 7-syllable lines
+# Stage 1 (basic):
+#    Generate possible subtrees, including those missing certain CP tags.
+#    DONE
+# Stage 2 (entailment):
+#    Include all trees that are parent of a sample.
+#    Emit output that maps all parent trees to a sample.
+#    Allows training encoder->decoder with entailed output.
+#    That is, the output is a summary of the input, instead of just a direct copy.
+#    This gives a lot more flexibility in creating a predictor.
 
 
 num_lines=0
@@ -25,22 +29,10 @@ outf_7 = open("haiku_7.txt", "w")
 num_5=0
 num_7=0
 
-drop_clauses=[]
-drop_clauses=['whnp']
-drop_clauses=['adjp']
-drop_clauses=['adjp','whnp']
+drop_clauses=['adjp','whnp','s','sbar','sbarq','sinv','sq']
 
-for line in sys.stdin:
-    if line[0] != '(':
-        continue
-    line = line[:-1].lower()
-    t = snlp.parse(line)
-    t = snlp.strip(t, ['``', '.', '"', '"'])
-    # max words can include punctuation
-    # for sample in snlp.combos(t, labs=drop_clauses):
-    # for sample in snlp.clauses(t, _min=1, _max=7, _minlen=10):
-    for sample in snlp.clipped_unique(t, drop_clauses):
-        print(sample)
+def process(sample):
+        # print(sample)
         sylls = 0
         badword = False
         # sample = snlp.punct(sample)
@@ -62,6 +54,19 @@ for line in sys.stdin:
         elif sylls == 7:
             outf_7.write(' '.join(sample) + '\n');
             num_7 += 1
+
+
+for line in sys.stdin:
+    if line[0] != '(':
+        continue
+    line = line[:-1].lower()
+    t = snlp.parse(line)
+    t = snlp.strip(t, ['``', '.', '"', '"'])
+    # max words can include punctuation
+    # for sample in snlp.combos(t, labs=drop_clauses):
+    # for sample in snlp.clauses(t, _min=1, _max=7, _minlen=10):
+    for sample in snlp.clipped_unique(t, drop_clauses):
+        process(sample)
     num_lines += 1
 
 outf_5.close()
