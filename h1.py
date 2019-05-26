@@ -3,6 +3,7 @@
 import sys
 
 import snlp
+import penn
 import cmudict
 
 cd = cmudict.CMUDict()
