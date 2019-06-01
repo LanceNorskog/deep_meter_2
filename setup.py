@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="Deep Meter",
+    name="Deep_Meter",
     version="0.0.1",
     author="Foo Bar",
     author_email="foo@bar.com",
