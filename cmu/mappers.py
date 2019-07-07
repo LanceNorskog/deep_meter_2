@@ -18,7 +18,7 @@ class Decoder:
 
         num_sylls = len(big_sylls)
         # longest word
-        max_sylls = 2
+        max_sylls = 5
         self.syll2idx = {}
         for index, syll in enumerate(big_sylls):
             self.syll2idx[syll] = index
@@ -39,7 +39,7 @@ class Decoder:
             if index < 10:
                 continue
             j = 0
-            for syll in word2sylls[word]:
+            for syll in word2sylls[word][:max_sylls]:
                 print(self.syll2idx[syll])
                 self.idx2word[j][self.syll2idx[syll]].append(index)
                 j += 1
