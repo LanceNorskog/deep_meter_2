@@ -34,7 +34,7 @@ class FullSearch:
         # sort double-wides, pick best half
         sortind = np.argsort(valset, kind='mergesort')[self.batch_size:self.batch_size*2]
         self.scorevals = valset[sortind]
-        pathset = np.zeros((self.batch_size * 2, sylls), dtype='int32')
+        pathset = np.zeros((self.batch_size * 2, self.sylls), dtype='int32')
         pathset[:self.batch_size][:] = self.scorepaths[:self.batch_size][:]
         pathset[self.batch_size:][:] = batchpaths[:self.batch_size][:]
         self.scorepaths = pathset[sortind]
@@ -53,11 +53,11 @@ class FullSearch:
         i = self.batch_size
         skips = 0
         breakouts = 0
-        for x in product(np.arange(self.dict, dtype='int32'), repeat=sylls):
+        for x in product(np.arange(self.dict, dtype='int32'), repeat=self.sylls):
             if i % self.batch_size == 0:
                 batchpaths = np.zeros((self.batch_size, self.sylls), dtype='int32')
                 #batchvals = np.zeros((self.batch_size), dtype='float32')
-                indices = np.arange(sylls, dtype='int32')
+                indices = np.arange(self.sylls, dtype='int32')
             x = list(x)
             #print('indices: ', x)
             batchpaths[i % self.batch_size] = x
@@ -88,10 +88,10 @@ class FullSearch:
 
 
 if __name__ == "__main__":
-    sylls = 7
-    dict=5
-    predict = np.random.random((sylls, dict))
-    fb = FullSearch(sylls * sylls * sylls, sylls, dict)
+    _sylls = 7
+    _dict=5
+    predict = np.random.random((_sylls, _dict))
+    fb = FullSearch(_sylls * _sylls * _sylls, _sylls, _dict)
     fb.mainloop(predict)
     print('score[0]: {}'.format(fb.scorevals[0]))
     print('paths[0]: {}'.format(fb.scorepaths[0]))
