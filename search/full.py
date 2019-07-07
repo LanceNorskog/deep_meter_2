@@ -46,7 +46,7 @@ class FullSearch:
         return (np.min(self.scorevals), np.max(self.scorevals))
 
     def mainloop(self, predict):
-        vals = np.zeros((sylls), dtype='float32')
+        vals = np.zeros((self.sylls), dtype='float32')
         last_lower = 0.0
         last_peak = 0.0
         last_better = 0
@@ -55,7 +55,7 @@ class FullSearch:
         breakouts = 0
         for x in product(np.arange(dict, dtype='int32'), repeat=sylls):
             if i % self.batch_size == 0:
-                batchpaths = np.zeros((self.batch_size, sylls), dtype='int32')
+                batchpaths = np.zeros((self.batch_size, self.sylls), dtype='int32')
                 #batchvals = np.zeros((self.batch_size), dtype='float32')
                 indices = np.arange(sylls, dtype='int32')
             x = list(x)
