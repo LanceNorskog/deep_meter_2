@@ -53,7 +53,7 @@ class FullSearch:
         i = self.batch_size
         skips = 0
         breakouts = 0
-        for x in product(np.arange(dict, dtype='int32'), repeat=sylls):
+        for x in product(np.arange(self.dict, dtype='int32'), repeat=sylls):
             if i % self.batch_size == 0:
                 batchpaths = np.zeros((self.batch_size, self.sylls), dtype='int32')
                 #batchvals = np.zeros((self.batch_size), dtype='float32')
