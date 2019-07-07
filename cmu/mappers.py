@@ -40,7 +40,6 @@ class Decoder:
                 continue
             j = 0
             for syll in word2sylls[word][:max_sylls]:
-                print(self.syll2idx[syll])
                 self.idx2word[j][self.syll2idx[syll]].append(index)
                 j += 1
 
