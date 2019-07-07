@@ -36,59 +36,81 @@ class Decoder:
             for j in range(num_sylls):
                 self.idx2word[i][j] = []
         for index, word in enumerate(self.wordlist):
+            print(index, word)
             if index < 10:
                 continue
             j = 0
             for syll in word2sylls[word][:max_sylls]:
                 self.idx2word[j][self.syll2idx[syll]].append(index)
                 j += 1
+        self.wordlist = np.array(self.wordlist)
 
-    def get_partial_sentences(self, predict, partial):
+    def get_partial_sentences(self, predict, partial, step):
         def noise(s):
             indent = ''.join(['.' for i in partial])
             #print(indent, s)
 
         noise('predict: {}, partial {}'.format(predict, partial))
         num_sylls = len(predict)
-        if len(partial) == num_sylls:
+        if step == num_sylls:
             noise('yielding: {}'.format(partial))
             yield partial
             return
         max_sylls = 2
-        j = len(partial)
-        wordset = self.idx2word[0][predict[j]]
-        noise('wordset[{}]: {}'.format(j, wordset))
+        wordset = self.idx2word[0][predict[step]]
+        noise('wordset[{}]: {}'.format(step, wordset))
         for word_ind in wordset:
-            noise('word[{}]: {}'.format(j, word_ind))
-            words = partial.copy()
+            noise('word[{}]: {}'.format(step, word_ind))
             k = 0
-            while k < max_sylls and j+k < num_sylls:
-                if not word_ind in self.idx2word[k][predict[j+k]]:
+            while k < max_sylls and step+k < num_sylls:
+                if not word_ind in self.idx2word[k][predict[step+k]]:
                     break
-                noise('k: {}, pred: {}'.format(k, predict[j+k]))
+                noise('k: {}, pred: {}'.format(k, predict[step+k]))
                 k += 1
             if k == self.wordlength[word_ind]:
-                for l in range(k):
-                    words.append(word_ind)
-                for x in self.get_partial_sentences(predict, words):
+                words = partial.copy()
+                words.append(word_ind)
+                for x in self.get_partial_sentences(predict, words, step + k):
                     noise('passing {}'.format(x))
                     yield x
                 return
 
-    ''' given set of n-syllable indexes, return sentences or nulls'''
+    ''' given set of n-syllable indexes, return word index lists or nulls'''
     def get_sentences(self, predictions):   
         out = [[]] * len(predictions)
         num_sylls = len(predictions[0])
         max_sylls = 2
         for i in range(len(predictions)):
             out[i] = []
-            for x in self.get_partial_sentences(predictions[i], []):
-                out[i].append(x)
+            for x in self.get_partial_sentences(predictions[i], [], 0):
+                out[i].append([x])
         return out
 
+    def decode_sentences(self, sentences):
+        out = []
+        for words_list in sentences:
+            sents = []
+            for words in words_list:
+                print('lookup ', words)
+                print('    found ', self.wordlist[np.array(words)][0])
+                sents.append(self.wordlist[np.array(words)].tolist())
+            out.append(sents)
+        print('decoded: ', out)
+        out
 
 
 if __name__ == "__main__":
+    def test(decoder, haiku):
+        predict = []
+        for arpa in haiku:
+            predict.append(decoder.syll2idx[arpa])
+        preds = decoder.get_sentences([predict])
+        print('preds: ', preds)
+        x = decoder.decode_sentences(preds)
+        print('x: ', x)
+        print('{} -> {}'.format(haiku, ' '.join(decoder.decode_sentences(decoder.get_sentences([predict]))[0][0][0].tolist())))
+        
+
     syllables = {'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'here':['HH IH R']}
     decoder = Decoder(syllables)
     print(decoder.syll2idx.keys())
@@ -99,11 +121,13 @@ if __name__ == "__main__":
 
     print('wordlist: ', decoder.wordlist)
     print('idx2word: ', decoder.idx2word)
+
+    test(decoder, ['IH Z'])
     
     predict = [[decoder.syll2idx['IH Z']]]
     print('Predicted words: ', decoder.get_sentences(predict))
     predict = [[decoder.syll2idx['IH Z'], decoder.syll2idx['DH AH']]]
-    print('Predicted words: ', decoder.get_sentences(predict))
+    print('Predicted words: ', decoder.decode_sentences(decoder.get_sentences(predict))[0])
     predict = [[decoder.syll2idx['DH AH'],  decoder.syll2idx['IH Z'], decoder.syll2idx['HH IH R']]]
     print('Predicted words: ', decoder.get_sentences(predict)[0])
     predict = [[decoder.syll2idx['DH AH'],  decoder.syll2idx['IH Z'], decoder.syll2idx['HH IH R'],  decoder.syll2idx['IH Z']]]
