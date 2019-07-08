@@ -7,8 +7,6 @@ class FullSearch:
         self.batch_size = batch_size
         self.sylls = sylls
         self.dict = dict
-        self.scorevals = np.array((batch_size), dtype='float32')
-        self.scorepaths = np.array((batch_size, sylls), dtype='int32')
 
     def endbatch(self, i, batchpaths, batchvals, lower):
         
@@ -46,6 +44,8 @@ class FullSearch:
         return (np.min(self.scorevals), np.max(self.scorevals))
 
     def mainloop(self, predict):
+        self.scorevals = np.array((self.batch_size), dtype='float32')
+        self.scorepaths = np.array((self.batch_size, self.sylls), dtype='int32')
         vals = np.zeros((self.sylls), dtype='float32')
         last_lower = 0.0
         last_peak = 0.0
@@ -80,10 +80,11 @@ class FullSearch:
                 last_better = i // self.batch_size
             last_lower = lo
             last_peak = hi
-            if i // self.batch_size - 50 > last_better:
+            #if i // self.batch_size - 50 > last_better:
                 #print('batch[{}]: break out: lo {}, hi {}'.format(i, lo, hi))
-                breakouts += 1
+                #breakouts += 1
                 #break
+        print('done: lo {} hi {}'.format(np.min(self.scorevals), np.max(self.scorevals)))
         return (skips, breakouts)
 
 

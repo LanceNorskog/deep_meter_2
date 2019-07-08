@@ -13,12 +13,20 @@ def topk(predictions, top_k=5):
             indices[p][s] = short
     return (vals, indices)
 
+''' return the original indices that are chosen '''
+def topk_lookup(vals, indices, chosen):
+    #print('vals:  ', vals)
+    #print('inds: ', indices)
+    #print('chosen: ', chosen)
+    return (vals[np.arange(len(vals)), chosen], indices[np.arange(len(vals)), chosen])
+
 if __name__ == "__main__":
     preds = np.array([[[0, 1, 2], [4, 3, 5], [8,6,7]]])
     print('predictions: ', preds)
     (v, i) = topk(preds, top_k=2)
-    print(preds)
-    print(v)
-    print(i)
+    print('preds: ', preds)
+    (rv, ri) = topk_lookup(v[0], i[0], np.array([[0, 0, 0],[1,1,1]]))
+    print('rv: ', rv)
+    print('ri: ', ri)
             
     
