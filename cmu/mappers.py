@@ -36,7 +36,6 @@ class Decoder:
             for j in range(num_sylls):
                 self.idx2word[i][j] = []
         for index, word in enumerate(self.wordlist):
-            print(index, word)
             if index < 10:
                 continue
             j = 0
@@ -91,24 +90,23 @@ class Decoder:
         for words_list in sentences:
             sents = []
             for words in words_list:
-                print('lookup ', words)
-                print('    found ', self.wordlist[np.array(words)][0])
                 sents.append(self.wordlist[np.array(words)].tolist())
             out.append(sents)
-        print('decoded: ', out)
-        out
+        return out
 
 
 if __name__ == "__main__":
     def test(decoder, haiku):
+        print(haiku, ':')
         predict = []
         for arpa in haiku:
             predict.append(decoder.syll2idx[arpa])
         preds = decoder.get_sentences([predict])
-        print('preds: ', preds)
-        x = decoder.decode_sentences(preds)
-        print('x: ', x)
-        print('{} -> {}'.format(haiku, ' '.join(decoder.decode_sentences(decoder.get_sentences([predict]))[0][0][0].tolist())))
+        decs = decoder.decode_sentences(preds)
+        for dec in decs:
+            for poss in dec:
+                for sent in poss:
+                    print('  -> {}'.format(haiku, ' '.join(list(sent))))
         
 
     syllables = {'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'here':['HH IH R']}
@@ -123,15 +121,13 @@ if __name__ == "__main__":
     print('idx2word: ', decoder.idx2word)
 
     test(decoder, ['IH Z'])
+    test(decoder, ['IH Z', 'DH AH'])
+    test(decoder, ['IH Z', 'DH AH', 'HH IH R'])
+    test(decoder, ['DH AH', 'HH IH R', 'IH Z'])
+    test(decoder, ['DH AH', 'M AH', 'G ER', 'IH Z', 'HH IH R'])
+    test(decoder, ['M AH'])
+    test(decoder, ['G ER'])
     
-    predict = [[decoder.syll2idx['IH Z']]]
-    print('Predicted words: ', decoder.get_sentences(predict))
-    predict = [[decoder.syll2idx['IH Z'], decoder.syll2idx['DH AH']]]
-    print('Predicted words: ', decoder.decode_sentences(decoder.get_sentences(predict))[0])
-    predict = [[decoder.syll2idx['DH AH'],  decoder.syll2idx['IH Z'], decoder.syll2idx['HH IH R']]]
-    print('Predicted words: ', decoder.get_sentences(predict)[0])
-    predict = [[decoder.syll2idx['DH AH'],  decoder.syll2idx['IH Z'], decoder.syll2idx['HH IH R'],  decoder.syll2idx['IH Z']]]
-    print('Predicted words: ', decoder.get_sentences(predict)[0])
     predict = [[decoder.syll2idx['DH AH'], decoder.syll2idx['M AH'], decoder.syll2idx['G ER'], decoder.syll2idx['IH Z'], decoder.syll2idx['HH IH R']]]
     print('Predicted words: ', decoder.get_sentences(predict)[0])
     predict = [[decoder.syll2idx['M AH']]]
