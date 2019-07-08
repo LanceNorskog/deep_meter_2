@@ -72,7 +72,6 @@ class Decoder:
                 for x in self.get_partial_sentences(predict, words, step + k):
                     noise('passing {}'.format(x))
                     yield x
-                return
 
     ''' given set of n-syllable indexes, return word index lists or nulls'''
     def get_sentences(self, predictions):   
@@ -106,37 +105,27 @@ if __name__ == "__main__":
         for dec in decs:
             for poss in dec:
                 for sent in poss:
-                    print('  -> {}'.format(haiku, ' '.join(list(sent))))
+                    print('  -> {}'.format(' '.join(list(sent))))
         
 
-    syllables = {'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'here':['HH IH R']}
+    syllables = {'therefore':['DH EH R', 'F AO R'], 'there':['DH EH R'], 'for':['F AO R']}
+    syllables = {'therefore':['DH EH R', 'F AO R'], 'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'there':['DH EH R'], 'for':['F AO R'], 'me':['M IY']}
     decoder = Decoder(syllables)
     print(decoder.syll2idx.keys())
     print(decoder.syll2idx.values())
-    print(decoder.syll2idx['IH Z'], decoder.idx2syll[0])
     print(decoder.wordlist)
     print('# features: ', len(decoder.idx2syll))
 
     print('wordlist: ', decoder.wordlist)
     print('idx2word: ', decoder.idx2word)
 
-    test(decoder, ['IH Z'])
-    test(decoder, ['IH Z', 'DH AH'])
-    test(decoder, ['IH Z', 'DH AH', 'HH IH R'])
-    test(decoder, ['DH AH', 'HH IH R', 'IH Z'])
-    test(decoder, ['DH AH', 'M AH', 'G ER', 'IH Z', 'HH IH R'])
-    test(decoder, ['M AH'])
-    test(decoder, ['G ER'])
-    
-    predict = [[decoder.syll2idx['DH AH'], decoder.syll2idx['M AH'], decoder.syll2idx['G ER'], decoder.syll2idx['IH Z'], decoder.syll2idx['HH IH R']]]
-    print('Predicted words: ', decoder.get_sentences(predict)[0])
-    predict = [[decoder.syll2idx['M AH']]]
-    print('Predicted words: ', decoder.get_sentences(predict))
-    predict = [[decoder.syll2idx['G ER']]]
-    print('Predicted words: ', decoder.get_sentences(predict))
-    predict = [[decoder.syll2idx['G ER'], decoder.syll2idx['M AH']]]
-    print('Predicted words: ', decoder.get_sentences(predict)[0])
-
-    # decode 5 ints into a series of words
-    # idx2word[0-4][index into wordlist]
+    #test(decoder, ['IH Z'])
+    #test(decoder, ['IH Z', 'DH AH'])
+    #test(decoder, ['IH Z', 'DH AH', 'DH EH R'])
+    #test(decoder, ['DH AH', 'DH EH R', 'IH Z'])
+    #test(decoder, ['DH AH', 'M AH', 'G ER', 'IH Z', 'DH EH R'])
+    test(decoder, ['DH EH R', 'F AO R', 'DH AH', 'M AH', 'G ER', 'IH Z', 'DH EH R', 'F AO R', 'M IY'])
+    #test(decoder, ['M AH'])
+    #test(decoder, ['G ER'])
+    test(decoder, ['DH EH R', 'F AO R'])
     
