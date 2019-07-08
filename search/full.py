@@ -90,15 +90,29 @@ class FullSearch:
 
 
 if __name__ == "__main__":
-    _sylls = 7
-    _dict=5
-    predict = np.random.random((_sylls, _dict))
-    fb = FullSearch(20, _sylls, _dict)
+    def fib(n):
+        out = [0]*n
+        i = 2
+        out[0] = 1
+        out[1] = 1
+        for i in range(2, n):
+            out[i] = out[i-1] + out[i-2]
+        return out
+
+    _sylls = 3
+    _dict = 3
+    data = fib(_sylls * _dict)
+    data[0] = 0
+    predict = np.reshape(data, (_sylls, _dict))
+    print('predict: ', predict)
+    fb = FullSearch(4, _sylls, _dict)
     fb.mainloop(predict)
     print('score[0]: {}'.format(fb.scorevals[0]))
     print('paths[0]: {}'.format(fb.scorepaths[0]))
     print('score[-1]: {}'.format(fb.scorevals[-1]))
     print('paths[-1]: {}'.format(fb.scorepaths[-1]))
     print('min {}, max {}'.format(np.min(fb.scorevals), np.max(fb.scorevals)))
+    print('vals {}'.format((fb.scorevals)))
+    print('paths {}'.format((fb.scorepaths)))
     
 
