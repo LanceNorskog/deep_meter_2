@@ -101,8 +101,8 @@ if __name__ == "__main__":
             out[i] = out[i-1] + out[i-2]
         return out
 
-    _sylls = 3
-    _dict = 3
+    _sylls = 5
+    _dict = 7
     data = fib(_sylls * _dict)
     data[0] = 0
     predict = np.reshape(data, (_sylls, _dict))
