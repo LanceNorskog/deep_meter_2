@@ -6,37 +6,38 @@ class Decoder:
     def __init__(self, word2sylls):
         self.word2sylls = word2sylls
         big_sylls = set()
+        self.wordoff = 100000
+        self.sylloff = 200000
 
-        self.wordlist = [''] * (len(word2sylls) + 10)
-        self.wordlength = [0] * (len(word2sylls) + 10)
-        for index, word in enumerate(word2sylls):
-            self.wordlist[index + 10] = word
+        self.wordlist = [''] * (len(word2sylls) + self.wordoff)
+        self.wordlength = [0] * (len(word2sylls) + self.wordoff)
+        for index, word in enumerate(word2sylls, self.wordoff):
+            self.wordlist[index] = word
             sylls = word2sylls[word]
-            self.wordlength[index + 10] = len(sylls)
+            self.wordlength[index] = len(sylls)
             for syll in sylls:
                 big_sylls.add(syll)
 
-        num_sylls = len(big_sylls)
+        num_sylls = len(big_sylls) + self.sylloff
         # longest word
         max_sylls = 5
         self.syll2idx = {}
-        for index, syll in enumerate(big_sylls):
+        for index, syll in enumerate(big_sylls, self.sylloff):
             self.syll2idx[syll] = index
-        self.idx2syll = [0] * len(self.syll2idx)
-        for index, syll in enumerate(self.syll2idx):
+        self.idx2syll = [0] * num_sylls
+        for index, syll in enumerate(self.syll2idx, self.sylloff):
             self.idx2syll[index] = syll
 
         # indexes into wordlist
         # 5 is longest known word 
         # idx2word[0][1] = [word index] means "syll #2 is first syll in word [index]"
-        self.idx2word = np.zeros((2, len(self.idx2syll)), dtype='int32')
         self.idx2word = [[]] * max_sylls
         for i in range(max_sylls):
             self.idx2word[i] = [[]] * num_sylls
             for j in range(num_sylls):
                 self.idx2word[i][j] = []
         for index, word in enumerate(self.wordlist):
-            if index < 10:
+            if index < self.wordoff:
                 continue
             j = 0
             for syll in word2sylls[word][:max_sylls]:
@@ -113,11 +114,9 @@ if __name__ == "__main__":
     decoder = Decoder(syllables)
     print(decoder.syll2idx.keys())
     print(decoder.syll2idx.values())
-    print(decoder.wordlist)
     print('# features: ', len(decoder.idx2syll))
 
-    print('wordlist: ', decoder.wordlist)
-    print('idx2word: ', decoder.idx2word)
+    print('wordlist: ', decoder.wordlist[decoder.wordoff:])
 
     #test(decoder, ['IH Z'])
     #test(decoder, ['IH Z', 'DH AH'])
