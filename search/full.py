@@ -5,11 +5,14 @@ from itertools import product
 ''' given predictions.shape=(N, sylls, dict), find the top #pool paths and their scores '''
 class FullSearch:
     def __init__(self, pool, sylls, dict):
+        if (pool % sylls != 0):
+            raise Exception('pool must be a multiple of sylls')
         self.pool = pool
         self.sylls = sylls
         self.dict = dict
 
     def endbatch(self, i, batchpaths, batchvals, lower):
+        #print('check: ', batchpaths)
         
         # print('Batch[{}], peak {}: '.format(i, lower))
         if lower == 0.0:
@@ -30,7 +33,7 @@ class FullSearch:
         valset = np.zeros((self.pool + batch_size), dtype='float32')
         valset[:self.pool] = self.scorevals[:self.pool]
         valset[self.pool:] = batchvals[:batch_size]
-        sortind = np.flip(np.argsort(valset, kind='mergesort'))[:self.pool]
+        sortind = np.flip(np.argsort(valset))[:self.pool]
         self.scorevals = valset[sortind]
 
         # save matching paths
@@ -52,40 +55,39 @@ class FullSearch:
         last_lower = 0.0
         last_peak = 0.0
         last_better = 0
-        i = self.pool
+        i = 0
         skips = 0
         breakouts = 0
+        batchpaths = np.zeros((self.pool, self.sylls), dtype='int32')
+        #batchvals = np.zeros((self.pool), dtype='float32')
+        indices = np.arange(self.sylls, dtype='int32')
         for x in product(np.arange(self.dict, dtype='int32'), repeat=self.sylls):
-            if i % self.pool == 0:
-                batchpaths = np.zeros((self.pool, self.sylls), dtype='int32')
-                #batchvals = np.zeros((self.pool), dtype='float32')
-                indices = np.arange(self.sylls, dtype='int32')
             x = list(x)
-            #print('indices: ', x)
             batchpaths[i % self.pool] = x
-            i += 1
-            #print('batchpaths.shape: ', batchpaths.shape)
-            #print('batchpaths: ', batchpaths)
-            #print('predict.shape: ', predict.shape)
-            #print('predict: ', predict)
-            batchvals = np.sum(predict[indices, batchpaths], axis=-1)
-            newhi = np.max(batchvals)
-            if newhi < last_lower:
-                skips += 1
-                continue
-            (lo, hi) = self.endbatch(i - self.pool, batchpaths, batchvals, last_lower)
-            #if lo > last_lower:
-            #    last_lower = lo
-            #    last_better = i // self.pool
-            if hi > last_peak:
+            if i % self.pool == 0:
+                #print('batchpaths.shape: ', batchpaths.shape)
+                #print('batchpaths: ', batchpaths)
+                #print('predict.shape: ', predict.shape)
+                #print('predict: ', predict)
+                batchvals = np.sum(predict[indices, batchpaths], axis=-1)
+                newhi = np.max(batchvals)
+                if newhi < last_lower:
+                    skips += 1
+                    continue
+                (lo, hi) = self.endbatch(i - self.pool, batchpaths, batchvals, last_lower)
+                #if lo > last_lower:
+                #    last_lower = lo
+                #    last_better = i // self.pool
+                if hi > last_peak:
+                    last_peak = hi
+                    last_better = i // self.pool
+                last_lower = lo
                 last_peak = hi
-                last_better = i // self.pool
-            last_lower = lo
-            last_peak = hi
-            #if i // self.pool - 50 > last_better:
-                #print('batch[{}]: break out: lo {}, hi {}'.format(i, lo, hi))
-                #breakouts += 1
-                #break
+                #if i // self.pool - 50 > last_better:
+                    #print('batch[{}]: break out: lo {}, hi {}'.format(i, lo, hi))
+                    #breakouts += 1
+                    #break
+            i += 1
         return (skips, breakouts)
 
 
@@ -105,7 +107,7 @@ if __name__ == "__main__":
     data[0] = 0
     predict = np.reshape(data, (_sylls, _dict))
     print('predict: ', predict)
-    fb = FullSearch(4, _sylls, _dict)
+    fb = FullSearch(_sylls, _sylls, _dict)
     fb.mainloop(predict)
     print('score[0]: {}'.format(fb.scorevals[0]))
     print('paths[0]: {}'.format(fb.scorepaths[0]))
