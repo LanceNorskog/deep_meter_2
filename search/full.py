@@ -2,6 +2,7 @@ import numpy as np
 
 from itertools import product
 
+''' given predictions.shape=(N, sylls, dict), find the top #batch_size paths and their scores, batch_size must be multiple of #dict '''
 class FullSearch:
     def __init__(self, batch_size, sylls, dict):
         self.batch_size = batch_size
@@ -19,7 +20,6 @@ class FullSearch:
             self.scorevals = self.scorevals[sortind]
             self.scorepaths = self.scorepaths[sortind]
             return (np.min(self.scorevals), np.max(self.scorevals))    
-
 
         sortind = np.argsort(batchvals)
         batchvals = batchvals[sortind]
@@ -84,7 +84,6 @@ class FullSearch:
                 #print('batch[{}]: break out: lo {}, hi {}'.format(i, lo, hi))
                 #breakouts += 1
                 #break
-        print('done: lo {} hi {}'.format(np.min(self.scorevals), np.max(self.scorevals)))
         return (skips, breakouts)
 
 
