@@ -7,7 +7,7 @@ class Decoder:
         self.word2sylls = word2sylls
         big_sylls = set()
         self.wordoff = 100000
-        self.sylloff = 0
+        self.sylloff = 1000
 
         self.wordlist = [''] * (len(word2sylls) + self.wordoff)
         self.wordlength = [0] * (len(word2sylls) + self.wordoff)
