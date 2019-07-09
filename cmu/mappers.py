@@ -31,7 +31,7 @@ class Decoder:
         for index, syll in enumerate(sl, self.sylloff):
             self.syll2idx[syll] = index
         self.idx2syll = [0] * num_sylls
-        for index, syll in enumerate(self.syll2idx, self.sylloff):
+        for index, syll in enumerate(sl, self.sylloff):
             self.idx2syll[index] = syll
 
         # indexes into wordlist
@@ -42,9 +42,7 @@ class Decoder:
             self.idx2word[i] = [[]] * num_sylls
             for j in range(num_sylls):
                 self.idx2word[i][j] = []
-        for index, word in enumerate(wl):
-            if index < self.wordoff:
-                continue
+        for index, word in enumerate(wl, self.wordoff):
             j = 0
             for syll in word2sylls[word][:max_sylls]:
                 self.idx2word[j][self.syll2idx[syll]].append(index)
