@@ -42,7 +42,7 @@ class Decoder:
             self.idx2word[i] = [[]] * num_sylls
             for j in range(num_sylls):
                 self.idx2word[i][j] = []
-        for index, word in enumerate(self.wordlist):
+        for index, word in enumerate(wl):
             if index < self.wordoff:
                 continue
             j = 0
