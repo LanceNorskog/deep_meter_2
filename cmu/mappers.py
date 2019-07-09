@@ -4,6 +4,9 @@ import numpy as np
 
 class Decoder:
     def __init__(self, word2sylls):
+        wl = [w for w in word2sylls.keys()]
+        wl.sort()
+        print(wl[0:10])
         self.word2sylls = word2sylls
         big_sylls = set()
         self.wordoff = 100000
@@ -11,7 +14,7 @@ class Decoder:
 
         self.wordlist = [''] * (len(word2sylls) + self.wordoff)
         self.wordlength = [0] * (len(word2sylls) + self.wordoff)
-        for index, word in enumerate(word2sylls, self.wordoff):
+        for index, word in enumerate(wl, self.wordoff):
             self.wordlist[index] = word
             sylls = word2sylls[word]
             self.wordlength[index] = len(sylls)
@@ -22,7 +25,10 @@ class Decoder:
         # longest word
         max_sylls = 5
         self.syll2idx = {}
-        for index, syll in enumerate(big_sylls, self.sylloff):
+        sl = [s for s in big_sylls]
+        sl.sort()
+        print(sl[0:10])
+        for index, syll in enumerate(sl, self.sylloff):
             self.syll2idx[syll] = index
         self.idx2syll = [0] * num_sylls
         for index, syll in enumerate(self.syll2idx, self.sylloff):
