@@ -23,9 +23,9 @@ class FullSearch:
             self.scorepaths = self.scorepaths[sortind]
             return (np.min(self.scorevals), np.max(self.scorevals))    
 
-        sortind = np.argsort(batchvals)
-        batchvals = batchvals[sortind]
-        batchpaths = batchpaths[sortind]
+        #sortind = np.flip(np.argsort(batchvals))
+        #batchvals = batchvals[sortind]
+        #batchpaths = batchpaths[sortind]
 
         batch_size = len(batchvals)
 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     data[0] = 0
     predict = np.reshape(data, (_sylls, _dict))
     print('predict: ', predict)
-    fb = FullSearch(_sylls, _sylls, _dict)
+    fb = FullSearch(_sylls*2, _sylls, _dict)
     fb.mainloop(predict)
     print('score[0]: {}'.format(fb.scorevals[0]))
     print('paths[0]: {}'.format(fb.scorepaths[0]))
