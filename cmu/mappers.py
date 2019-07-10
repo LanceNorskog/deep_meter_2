@@ -2,6 +2,20 @@ import numpy as np
 
 # no language model
 
+# nuke homynyms- they make decoding a mess
+def trim_homynyms(word2sylls):
+    trimw = {}
+    trims = {}
+    for word in word2sylls:
+        sylls = word2sylls[word]
+        x = '-'.join(sylls)
+        trimw[x] = word
+        trims[x] = sylls
+    out = {}
+    for key in trimw:
+        out[trimw[key]] = trims[key]
+    return out
+
 class Decoder:
     def __init__(self, word2sylls):
         wl = [w for w in word2sylls.keys()]
@@ -111,6 +125,9 @@ class Decoder:
 
 
 if __name__ == "__main__":
+    
+    from syllables_cmu import syllables as word2syll
+    
     def test(decoder, haiku):
         print(haiku, ':')
         predict = []
@@ -143,4 +160,6 @@ if __name__ == "__main__":
     #test(decoder, ['M AH'])
     #test(decoder, ['G ER'])
     test(decoder, ['DH EH R', 'F AO R'])
-    
+
+    trimmed = trim_homynyms(word2syll)
+    print(trimmed['therefore'])
