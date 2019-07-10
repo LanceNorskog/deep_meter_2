@@ -49,12 +49,8 @@ class FullSearch:
         pathset[:self.pool][:] = self.scorepaths[:self.pool][:]
         pathset[self.pool:][:] = batchpaths[:batch_size][:]
         self.scorepaths = pathset[sortind]
-        # re-sort scores
-        #sortind = np.argsort(self.scorevals)
-        #self.scorevals = self.scorevals[sortind]
-        #self.scorepaths = self.scorepaths[sortind]
 
-        return (np.min(self.scorevals), np.max(self.scorevals))
+        return (self.scorevals[-1], self.scorevals[0])
 
     def mainloop(self, predict):
         assert len(predict.shape) == 2
@@ -115,9 +111,9 @@ if __name__ == "__main__":
 
     _sylls = 5
     _dict = 7
-    data = fib(_sylls * _dict)
-    data[0] = 0
-    predict = np.reshape(data, (_sylls, _dict))
+    predict = fib(_sylls * _dict)
+    predict[0] = 0
+    predict = np.reshape(predict, (_sylls, _dict))
     print('predict: ', predict)
     fb = FullSearch(_sylls, _sylls, _dict)
     fb.mainloop(predict)

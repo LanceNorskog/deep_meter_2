@@ -6,7 +6,7 @@ class Decoder:
     def __init__(self, word2sylls):
         wl = [w for w in word2sylls.keys()]
         wl.sort()
-        print(wl[0:10])
+        #print(wl[0:10])
         self.word2sylls = word2sylls
         big_sylls = set()
         self.wordoff = 100000
@@ -28,7 +28,7 @@ class Decoder:
         self.syll2idx = {}
         sl = [s for s in big_sylls]
         sl.sort()
-        print(sl[0:10])
+        #print(sl[0:10])
         self.idx2syll = [0] * num_sylls
         for index, syll in enumerate(sl, self.sylloff):
             self.syll2idx[syll] = index
@@ -117,6 +117,7 @@ if __name__ == "__main__":
         for arpa in haiku:
             predict.append(decoder.syll2idx[arpa])
         preds = decoder.get_sentences(np.array([predict]))
+        #print('encoded sentences: ', preds)
         decs = decoder.decode_sentences(preds)
         for dec in decs:
             for poss in dec:
