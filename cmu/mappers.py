@@ -20,6 +20,7 @@ class Decoder:
             self.wordlength[index] = len(sylls)
             for syll in sylls:
                 big_sylls.add(syll)
+        self.wordlist = np.array(self.wordlist)
 
         num_sylls = len(big_sylls) + self.sylloff
         # longest word
@@ -28,10 +29,9 @@ class Decoder:
         sl = [s for s in big_sylls]
         sl.sort()
         print(sl[0:10])
-        for index, syll in enumerate(sl, self.sylloff):
-            self.syll2idx[syll] = index
         self.idx2syll = [0] * num_sylls
         for index, syll in enumerate(sl, self.sylloff):
+            self.syll2idx[syll] = index
             self.idx2syll[index] = syll
 
         # indexes into wordlist
@@ -47,9 +47,12 @@ class Decoder:
             for syll in word2sylls[word][:max_sylls]:
                 self.idx2word[j][self.syll2idx[syll]].append(index)
                 j += 1
-        self.wordlist = np.array(self.wordlist)
 
     def get_partial_sentences(self, predict, partial, step):
+        assert len(predict.shape) == 1
+        assert type(partial) == type([])
+        assert len(partial) == 0 or type(partial[0]) == type(0)
+
         def noise(s):
             indent = ''.join(['.' for i in partial])
             #print(indent, s)
@@ -80,6 +83,8 @@ class Decoder:
 
     ''' given set of n-syllable indexes, return word index lists or nulls'''
     def get_sentences(self, predictions):   
+        assert len(predictions.shape) == 2
+
         out = [[]] * len(predictions)
         num_sylls = len(predictions[0])
         max_sylls = 2
@@ -90,11 +95,17 @@ class Decoder:
         return out
 
     def decode_sentences(self, sentences):
+        assert type(sentences) == type([])
+        assert type(sentences[0]) == type([])
+        assert type(sentences[0][0]) == type([])
+        assert type(sentences[0][0][0]) == type([])
+        assert type(sentences[0][0][0][0]) == type(0)
+
         out = []
-        for words_list in sentences:
+        for wordind_list in sentences:
             sents = []
-            for words in words_list:
-                sents.append(self.wordlist[np.array(words)].tolist())
+            for wordind in wordind_list:
+                sents.append(self.wordlist[np.array(wordind)].tolist())
             out.append(sents)
         return out
 
@@ -105,7 +116,7 @@ if __name__ == "__main__":
         predict = []
         for arpa in haiku:
             predict.append(decoder.syll2idx[arpa])
-        preds = decoder.get_sentences([predict])
+        preds = decoder.get_sentences(np.array([predict]))
         decs = decoder.decode_sentences(preds)
         for dec in decs:
             for poss in dec:

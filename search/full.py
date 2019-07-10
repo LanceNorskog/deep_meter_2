@@ -5,17 +5,25 @@ from itertools import product
 ''' given predictions.shape=(N, sylls, dict), find the top #pool paths and their scores '''
 class FullSearch:
     def __init__(self, pool, sylls, dict):
+        assert type(pool) == type(0)
+        assert type(sylls) == type(0)
+        assert type(dict) == type(0)
+
         if (pool % sylls != 0):
             raise Exception('pool must be a multiple of sylls')
         self.pool = pool
         self.sylls = sylls
         self.dict = dict
 
-    def endbatch(self, i, batchpaths, batchvals, lower):
+    def endbatch(self, i, batchpaths, batchvals):
+        assert type(i) == type(0)
+        assert batchpaths.shape == (self.pool, self.sylls)
+        assert batchvals.shape == (self.pool,)
+
         #print('check: ', batchpaths)
         
         # print('Batch[{}], peak {}: '.format(i, lower))
-        if lower == 0.0:
+        if i < 0:
             self.scorevals = batchvals + 0.0
             self.scorepaths = batchpaths + 0
             sortind = np.argsort(self.scorevals)
@@ -49,6 +57,10 @@ class FullSearch:
         return (np.min(self.scorevals), np.max(self.scorevals))
 
     def mainloop(self, predict):
+        assert len(predict.shape) == 2
+        assert predict.shape[0] == self.sylls
+        assert predict.shape[1] == self.dict
+
         self.scorevals = np.array((self.pool), dtype='float32')
         self.scorepaths = np.array((self.pool, self.sylls), dtype='int32')
         vals = np.zeros((self.sylls), dtype='float32')
@@ -74,7 +86,7 @@ class FullSearch:
                 if newhi < last_lower:
                     skips += 1
                     continue
-                (lo, hi) = self.endbatch(i - self.pool, batchpaths, batchvals, last_lower)
+                (lo, hi) = self.endbatch(i - self.pool, batchpaths, batchvals)
                 #if lo > last_lower:
                 #    last_lower = lo
                 #    last_better = i // self.pool
@@ -107,7 +119,7 @@ if __name__ == "__main__":
     data[0] = 0
     predict = np.reshape(data, (_sylls, _dict))
     print('predict: ', predict)
-    fb = FullSearch(_sylls*2, _sylls, _dict)
+    fb = FullSearch(_sylls, _sylls, _dict)
     fb.mainloop(predict)
     print('score[0]: {}'.format(fb.scorevals[0]))
     print('paths[0]: {}'.format(fb.scorepaths[0]))
