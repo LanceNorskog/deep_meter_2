@@ -58,7 +58,7 @@ def sparse_categorical_crossentropy(target, output, from_logits=False, axis=-1):
         output = tf.log(output)
 
     output_shape = output.get_shape()
-    targets = K.cast(flatten(target), 'int64')
+    targets = K.cast(K.flatten(target), 'int64')
     logits = tf.reshape(output, [-1, tf.shape(output)[-1]])
     res = tf.nn.sparse_softmax_cross_entropy_with_logits(
         labels=targets,
@@ -92,7 +92,7 @@ def sparse_perfect_categorical_crossentropy(output, target, from_logits=False):
         output = tf.log(output)
 
     output_shape = output.get_shape()
-    targets = K.cast(flatten(target), 'int64')
+    targets = K.cast(K.flatten(target), 'int64')
     logits = tf.reshape(output, [-1, int(output_shape[-1])])
     res = tf.nn.sparse_softmax_cross_entropy_with_logits(
         labels=targets,
