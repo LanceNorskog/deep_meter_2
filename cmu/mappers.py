@@ -77,7 +77,7 @@ class Decoder:
             noise('yielding: {}'.format(partial))
             yield partial
             return
-        max_sylls = 2
+        max_sylls = 5
         wordset = self.idx2word[0][predict[step]]
         noise('wordset[{}]: {}'.format(step, wordset))
         for word_ind in wordset:
@@ -163,3 +163,6 @@ if __name__ == "__main__":
 
     trimmed = trim_homynyms(word2syll)
     print(trimmed['therefore'])
+
+    decoder = Decoder(word2syll)
+    test(decoder, ['W AO', 'T ER', 'M EH', 'L AH N'])
