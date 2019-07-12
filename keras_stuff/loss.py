@@ -11,14 +11,25 @@ import inspect
 import numpy as np
 import os
 
-from .common import floatx
-from .common import _EPSILON
-from .common import image_data_format
+from keras.common import floatx
+from keras.common import _EPSILON
+from keras.common import image_data_format
 
 # Legacy functions
-from .common import set_image_dim_ordering
-from .common import image_dim_ordering
+from keras.common import set_image_dim_ordering
+from keras.common import image_dim_ordering
 
+# VARIABLE MANIPULATION
+
+def _to_tensor(x, dtype):
+    """Convert the input `x` to a tensor of type `dtype`.
+    # Arguments
+        x: An object to be converted (numpy array, list, tensors).
+        dtype: The destination type.
+    # Returns
+        A tensor.
+    """
+    return tf.convert_to_tensor(x, dtype=dtype)
 
 def sparse_categorical_crossentropy(output, target, from_logits=False):
     """Categorical crossentropy with integer targets.
