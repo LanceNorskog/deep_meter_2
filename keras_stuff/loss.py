@@ -1,23 +1,9 @@
 import tensorflow as tf
-from tensorflow.python.training import moving_averages
-from tensorflow.python.ops import tensor_array_ops
-from tensorflow.python.ops import control_flow_ops
-from tensorflow.python.ops import functional_ops
-from tensorflow.python.ops import ctc_ops as ctc
-from tensorflow.python.ops import variables as tf_variables
 
 from collections import defaultdict
 import inspect
 import numpy as np
 import os
-
-from keras.common import floatx
-from keras.common import _EPSILON
-from keras.common import image_data_format
-
-# Legacy functions
-from keras.common import set_image_dim_ordering
-from keras.common import image_dim_ordering
 
 # VARIABLE MANIPULATION
 
