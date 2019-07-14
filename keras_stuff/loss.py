@@ -72,7 +72,7 @@ def sparse_categorical_crossentropy(target, output, from_logits=False, axis=-1):
 
 
 
-def sparse_categorical_crossentropy_temporal(target, output, from_logits=False, axis=-1):
+def sparse_categorical_crossentropy_temporal(target, output, from_logits=False, axis=-1,scale=0.1):
     """Categorical crossentropy with integer targets. Option to require perfect output.
     # Arguments
         target: An integer tensor.
@@ -120,7 +120,7 @@ def sparse_categorical_crossentropy_temporal(target, output, from_logits=False, 
 
     if len(output_shape) == 3:
         # if our output includes timesteps we need to reshape
-        return K.max(res, axis=-1)
+        return K.max(res, axis=-1) * scale
         #return tf.reshape(res, tf.shape(output)[:-1])
     else:
         return res
