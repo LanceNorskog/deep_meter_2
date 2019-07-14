@@ -120,7 +120,7 @@ def sparse_categorical_crossentropy_temporal(target, output, from_logits=False, 
 
     if len(output_shape) == 3:
         # if our output includes timesteps we need to reshape
-        return K.max(res, axis=-1) * scale + tf.reshape(res, tf.shape(output)[:-1])
+        return (K.max(res, axis=-1) * scale + tf.reshape(res, tf.shape(output)[:-1]))/2
     else:
         return res
 
