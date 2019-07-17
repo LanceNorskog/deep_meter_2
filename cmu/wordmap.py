@@ -6,9 +6,13 @@ import numpy as np
 
 class Wordmap:
     def __init__(self, m):
+        self.m = m
         self.mat = [set()] * m
         for x in range(m):
             self.mat[x] = None
+
+    def length(self):
+        return self.m
 
     def add(self, i, j):
         if self.mat[i] == None:
