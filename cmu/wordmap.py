@@ -8,7 +8,7 @@ class Wordmap:
     def __init__(self, m):
         self.mat = [set()] * m
         for x in range(m):
-            self.mat[x] = set()
+            self.mat[x] = None
 
     def add(self, i, j):
         if self.mat[i] == None:
