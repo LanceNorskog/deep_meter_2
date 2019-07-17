@@ -25,6 +25,7 @@ class Decoder:
         big_sylls = set()
         self.wordoff = 100000
         self.sylloff = 10
+        self.word2idx = {}
 
         self.wordlist = [''] * (len(word2sylls) + self.wordoff)
         self.wordlength = [0] * (len(word2sylls) + self.wordoff)
@@ -34,6 +35,7 @@ class Decoder:
             self.wordlength[index] = len(sylls)
             for syll in sylls:
                 big_sylls.add(syll)
+            self.word2idx[word] = index
         self.wordlist = np.array(self.wordlist)
 
         num_sylls = len(big_sylls) + self.sylloff
