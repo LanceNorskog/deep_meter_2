@@ -25,6 +25,13 @@ class Wordmap:
             else:
                 return False
 
+    def count(self):
+        total = 0
+        for x in range(len(self.mat)):
+            if self.mat[x] != None:
+                total += len(self.mat[x])
+        total
+
     def print(self):
         print(self.mat)
 
