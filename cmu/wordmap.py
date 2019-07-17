@@ -17,7 +17,7 @@ class Wordmap:
     def add(self, i, j):
         if self.mat[i] == None:
             self.mat[i] = set()
-        print("Adding {} to {}".format(j, self.mat[i]))
+        #print("Adding {} to {}".format(j, self.mat[i]))
         self.mat[i].add(j)
 
     def get(self, i, j):
