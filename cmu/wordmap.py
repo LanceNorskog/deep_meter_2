@@ -30,7 +30,7 @@ class Wordmap:
         for x in range(len(self.mat)):
             if self.mat[x] != None:
                 total += len(self.mat[x])
-        total
+        return total
 
     def print(self):
         print(self.mat)
