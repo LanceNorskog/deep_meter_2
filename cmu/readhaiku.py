@@ -1,6 +1,4 @@
 from keras.preprocessing import text
-from mappers import Decoder
-from wordmap import Wordmap
 
 
 import numpy as np
@@ -73,6 +71,8 @@ class Reader:
 
 if __name__ == "__main__":
     from syllables_cmu import syllables as word2sylls
+    from mappers import Decoder
+    from wordmap import Wordmap
 
     max_words = 1000000
     decoder = Decoder(word2sylls)
