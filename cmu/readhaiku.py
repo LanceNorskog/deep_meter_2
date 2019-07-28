@@ -44,16 +44,15 @@ class Reader:
                         elif word[:-2] + 'es' in word2sylls:
                             _word = word[:-2] + 'es'
                         if _word:
-                            #print('merged {} => {}'.format(word, _word))
                             word = _word
                     words.append(word)
+                _haiku = ' '.join(words)
                 for word in words:
                     if word in self.word2sylls:
                         self.haikuwordset.add(word)
                         for syll in self.word2sylls[word]:
                             _sylls.append(syll)
                         _thisidx = self.decoder.word2idx[word]
-                        #print('word {}, idx {}'.format(word, self.decoder.word2idx[word]))
                         if _lastidx != -1:
                             self.wordmap.add(_lastidx, _thisidx)
                         _lastidx = _thisidx
@@ -86,15 +85,12 @@ class Reader:
     # use "hashing trick" for input indexes
     # could be long text or haiku
     def gethash(self, big_input, max_words, hash_mole):
-        print('hash of ', big_input[0])
         hashed = np.zeros((len(big_input), max_words), dtype='float32')
-        print('{} # {}'.format(big_input[0], list(text.hashing_trick(big_input[0], hash_mole))))
         for i in range(len(big_input)):
             j = 0
             for h in text.hashing_trick(big_input[i], hash_mole):
                 if j == max_words:
                     print('haiku too long? ', big_input[i])
-                    print('full hash: ', hashed[i], h)
                 hashed[i][j] = h
                 j += 1
         return hashed
