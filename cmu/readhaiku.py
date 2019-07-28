@@ -84,7 +84,7 @@ class Reader:
 
     # use "hashing trick" for input indexes
     # could be long text or haiku
-    def gethash(self, big_input, max_words, hash_mole):
+    def gethash(self, big_input, max_words=10, hash_mole):
         hashed = np.zeros((len(big_input), max_words), dtype='float32')
         for i in range(len(big_input)):
             j = 0
