@@ -11,8 +11,8 @@ class Reader:
         self.word2sylls = word2sylls
         self.decoder = decoder
         self.wordmap = wordmap
-        textwordset = set()
-        haikuwordset = set()
+        self.textwordset = set()
+        self.haikuwordset = set()
 
     def readfile(self, haikufile, max_words=10, max_data=10000000, duplicate_haiku=True, deduplicate_haiku=True):
         big_text = []
