@@ -34,9 +34,9 @@ class Reader:
                     use_input = False
                 _lastidx = -1
                 for word in text.text_to_word_sequence(_haiku):
-                    if word in word2sylls:
+                    if word in self.word2sylls:
                         self.haikuwordset.add(word)
-                        for syll in word2sylls[word]:
+                        for syll in self.word2sylls[word]:
                             _sylls.append(syll)
                         _thisidx = self.decoder.word2idx[word]
                         #print('word {}, idx {}'.format(word, self.decoder.word2idx[word]))
