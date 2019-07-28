@@ -72,7 +72,7 @@ class Reader:
                     big_haiku.append(_haiku)
                     big_data.append(_data)
                 last_haiku = _haiku
-                if len(big_text) == max_data:
+                if len(big_text) >= max_data:
                     break
 
         big_text = np.array(big_text)
