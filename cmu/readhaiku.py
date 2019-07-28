@@ -5,7 +5,7 @@ import numpy as np
 
 # haiku 5/7 syllable dataset reader
 # format: long text tab short text
-# return (long text as (N,""), short text as (N, ""), short syllables as (N, num_syll, 1))
+# return (long indexes as (N,[word indexes] short text as (N, [word indexes]), short syllables as (N, num_syll, 1))
 class Reader:
     def __init__(self, word2sylls, decoder, wordmap):
         self.word2sylls = word2sylls
@@ -33,7 +33,21 @@ class Reader:
                 if len(textwords) > max_words:
                     use_input = False
                 _lastidx = -1
+                words = []
                 for word in text.text_to_word_sequence(_haiku):
+                    if word == "'":
+                        continue
+                    _word = None
+                    if not word in word2sylls and word[-2:] == "'s":
+                        if word[:-2] + 's' in word2sylls:
+                            _word = word[:-2] + 's'
+                        elif word[:-2] + 'es' in word2sylls:
+                            _word = word[:-2] + 'es'
+                        if _word:
+                            #print('merged {} => {}'.format(word, _word))
+                            word = _word
+                    words.append(word)
+                for word in words:
                     if word in self.word2sylls:
                         self.haikuwordset.add(word)
                         for syll in self.word2sylls[word]:
@@ -62,24 +76,46 @@ class Reader:
                 if len(big_text) == max_data:
                     break
 
-        print('{} -> {} : {}'.format(big_text[0], big_haiku[0], big_data[0]))
         big_text = np.array(big_text)
         big_haiku = np.array(big_haiku)
         big_data = np.array(big_data)
+        # this kind of nonsense should be in keras model code
         big_data = np.expand_dims(big_data, -1)
         return (big_text, big_haiku, big_data)
+
+    # use "hashing trick" for input indexes
+    # could be long text or haiku
+    def gethash(self, big_input, max_words, hash_mole):
+        print('hash of ', big_input[0])
+        hashed = np.zeros((len(big_input), max_words), dtype='float32')
+        print('{} # {}'.format(big_input[0], list(text.hashing_trick(big_input[0], hash_mole))))
+        for i in range(len(big_input)):
+            j = 0
+            for h in text.hashing_trick(big_input[i], hash_mole):
+                if j == max_words:
+                    print('haiku too long? ', big_input[i])
+                    print('full hash: ', hashed[i], h)
+                hashed[i][j] = h
+                j += 1
+        return hashed
+
+        
 
 if __name__ == "__main__":
     from syllables_cmu import syllables as word2sylls
     from mappers import Decoder
     from wordmap import Wordmap
 
-    max_words = 1000000
+    # max input length
+    max_words = 100
+    total_words = 1000000
     decoder = Decoder(word2sylls)
-    wordmap = Wordmap(max_words)
+    wordmap = Wordmap(total_words)
     reader = Reader(word2sylls, decoder, wordmap)
     (big_text, big_haiku, big_data) = reader.readfile("haiku_5.txt")
     print('{} -> {} : {}'.format(big_text[0], big_haiku[0], big_data[0]))
+    print('... {}'.format(reader.gethash(big_text, max_words, 10000)[0]))
+    print('... {}'.format(reader.gethash(big_haiku, 5, 10000)[0]))
 
     print('Full length clauses: ', len(big_text))
 
