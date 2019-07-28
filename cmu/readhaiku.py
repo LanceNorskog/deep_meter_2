@@ -31,7 +31,7 @@ class Reader:
                     continue
                 textwords = list(text.text_to_word_sequence(_text))
                 if len(textwords) > max_words:
-                    use_input = False
+                    _use_input = False
                 _lastidx = -1
                 words = []
                 for word in text.text_to_word_sequence(_haiku):
@@ -84,7 +84,7 @@ class Reader:
 
     # use "hashing trick" for input indexes
     # could be long text or haiku
-    def gethash(self, big_input, max_words=10, hash_mole):
+    def gethash(self, big_input, max_words=10, hash_mole=20000):
         hashed = np.zeros((len(big_input), max_words), dtype='float32')
         for i in range(len(big_input)):
             j = 0
@@ -103,12 +103,12 @@ if __name__ == "__main__":
     from wordmap import Wordmap
 
     # max input length
-    max_words = 100
+    max_words = 40
     total_words = 1000000
     decoder = Decoder(word2sylls)
     wordmap = Wordmap(total_words)
     reader = Reader(word2sylls, decoder, wordmap)
-    (big_text, big_haiku, big_data) = reader.readfile("haiku_5.txt")
+    (big_text, big_haiku, big_data) = reader.readfile("haiku_5.txt", max_words=max_words)
     print('{} -> {} : {}'.format(big_text[0], big_haiku[0], big_data[0]))
     print('... {}'.format(reader.gethash(big_text, max_words, 10000)[0]))
     print('... {}'.format(reader.gethash(big_haiku, 5, 10000)[0]))
