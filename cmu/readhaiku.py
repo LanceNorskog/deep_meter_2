@@ -38,10 +38,10 @@ class Reader:
                     if word == "'":
                         continue
                     _word = None
-                    if not word in word2sylls and word[-2:] == "'s":
-                        if word[:-2] + 's' in word2sylls:
+                    if not word in self.word2sylls and word[-2:] == "'s":
+                        if word[:-2] + 's' in self.word2sylls:
                             _word = word[:-2] + 's'
-                        elif word[:-2] + 'es' in word2sylls:
+                        elif word[:-2] + 'es' in self.word2sylls:
                             _word = word[:-2] + 'es'
                         if _word:
                             word = _word
