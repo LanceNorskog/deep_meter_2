@@ -13,14 +13,14 @@ class Reader:
         self.word2sylls = word2sylls
         self.decoder = decoder
         self.wordmap = wordmap
+        textwordset = set()
+        haikuwordset = set()
 
     def readfile(self, haikufile, max_words=10, max_data=10000000, duplicate_haiku=True, deduplicate_haiku=True):
         big_text = []
         big_haiku = []
         big_data = []
         big_data_file = haikufile
-        textwordset = set()
-        haikuwordset = set()
         with open(big_data_file) as f:
             last_haiku = ''
             for line in f.readlines():
@@ -37,7 +37,7 @@ class Reader:
                 _lastidx = -1
                 for word in text.text_to_word_sequence(_haiku):
                     if word in word2sylls:
-                        haikuwordset.add(word)
+                        self.haikuwordset.add(word)
                         for syll in word2sylls[word]:
                             _sylls.append(syll)
                         _thisidx = self.decoder.word2idx[word]
@@ -46,7 +46,7 @@ class Reader:
                             self.wordmap.add(_lastidx, _thisidx)
                         _lastidx = _thisidx
                 for textword in textwords:
-                    textwordset.add(textword)
+                    self.textwordset.add(textword)
                 if len(_sylls) != 5:
                     continue
                 _data = np.zeros((5), dtype='int32')
