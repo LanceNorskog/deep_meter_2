@@ -1,7 +1,5 @@
 
 import numpy as np
-from mappers import Decoder
-from full import FullSearch
 
 ''' return (summed weights, syllable indices) from 1 prediction set '''
 def get_top_k(predictions, top_k=5):
@@ -76,6 +74,9 @@ if __name__ == "__main__":
     (v, i) = get_top_k(preds, top_k=2)
     print('vals:  ', v)
     print('inds: ', i)
+
+    from mappers import Decoder
+    from full import FullSearch
 
     syllables = {'therefore':['DH EH R', 'F AO R'], 'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'there':['DH EH R'], 'for':['F AO R'], 'me':['M IY']}
     decoder = Decoder(syllables)
