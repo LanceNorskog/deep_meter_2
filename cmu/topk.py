@@ -15,7 +15,7 @@ def get_top_k(predictions, top_k=5):
         indices[s] = short
     return (vals, indices)
 
-def decodem(scorepaths, top_paths, decoder, wordset):
+def decodem(scorepaths, top_paths, decoder, wordset, wordmap):
     morepaths = np.zeros(scorepaths.shape, dtype='int32')
     for j in range(scorepaths.shape[0]):
         #print('scorepaths[{}]: {}'.format(j, scorepaths[j]))
@@ -77,6 +77,7 @@ if __name__ == "__main__":
 
     from mappers import Decoder
     from full import FullSearch
+    from wordmap import Wordmap
 
     syllables = {'therefore':['DH EH R', 'F AO R'], 'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'there':['DH EH R'], 'for':['F AO R'], 'me':['M IY']}
     decoder = Decoder(syllables)
@@ -86,5 +87,7 @@ if __name__ == "__main__":
     fs = FullSearch(num_sylls * 2, num_sylls, top_k)
     (top_vals, top_paths) = get_top_k(np.zeros((num_sylls, num_dict), dtype='float32'), top_k=top_k)
     fs.mainloop(top_paths)
-    sentences = decodem(fs.scorepaths, top_paths, decoder, [])
+    haikuwordset = set()
+    wordmap = Wordmap(100)
+    sentences = decodem(fs.scorepaths, top_paths, decoder, haikuwordset, wordmap)
     
