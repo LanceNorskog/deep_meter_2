@@ -88,7 +88,7 @@ class Reader:
         hashed = np.zeros((len(big_input), max_words), dtype='float32')
         for i in range(len(big_input)):
             j = 0
-            for h in text.hashing_trick(big_input[i], hash_mole):
+            for h in text.hashing_trick(big_input[i], hash_mole, hash_function='md5'):
                 if j == max_words:
                     print('haiku too long? ', big_input[i])
                 hashed[i][j] = h
