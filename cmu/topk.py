@@ -22,7 +22,7 @@ def decodem(scorepaths, top_paths, decoder, wordset):
         #print('top_paths.shape: ', top_paths.shape)
         #print('top_paths[{}]: {}'.format(j, top_paths))
         #print('top_paths[{}][]: {}'.format(j, top_paths[0][np.arange(num_sylls), scorepaths[j]]))
-        morepaths[j] = top_paths[np.arange(num_sylls), scorepaths[j]]
+        morepaths[j] = top_paths[np.arange(top_paths.shape[0]), scorepaths[j]]
     #print('morepaths: ' + str(morepaths))
     encoded = decoder.get_sentences(morepaths)
     sentences = {}
