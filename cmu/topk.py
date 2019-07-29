@@ -15,7 +15,7 @@ def get_top_k(predictions, top_k=5):
         indices[s] = short
     return (vals, indices)
 
-def decodem(scorepaths, decoder, wordset):
+def decodem(scorepaths, top_paths, decoder, wordset):
     morepaths = np.zeros(scorepaths.shape, dtype='int32')
     for j in range(scorepaths.shape[0]):
         #print('scorepaths[{}]: {}'.format(j, scorepaths[j]))
@@ -86,5 +86,5 @@ if __name__ == "__main__":
     fs = FullSearch(num_sylls * 2, num_sylls, top_k)
     (top_vals, top_paths) = get_top_k(np.zeros((num_sylls, num_dict), dtype='float32'), top_k=top_k)
     fs.mainloop(top_paths)
-    sentences = decodem(fs.scorepaths, decoder, [])
+    sentences = decodem(fs.scorepaths, top_paths, decoder, [])
     
