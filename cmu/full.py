@@ -2,18 +2,18 @@ import numpy as np
 
 from itertools import product
 
-''' given predictions.shape=(N, sylls, dict), find the top #pool paths and their scores '''
+''' given predictions.shape=(N, sylls, depth), find the top #pool paths and their scores '''
 class FullSearch:
-    def __init__(self, pool, sylls, dict):
+    def __init__(self, pool, sylls, depth):
         assert type(pool) == type(0)
         assert type(sylls) == type(0)
-        assert type(dict) == type(0)
+        assert type(depth) == type(0)
 
         if (pool % sylls != 0):
             raise Exception('pool must be a multiple of sylls')
         self.pool = pool
         self.sylls = sylls
-        self.dict = dict
+        self.depth = depth
 
     def endbatch(self, i, batchpaths, batchvals):
         assert type(i) == type(0)
@@ -53,9 +53,10 @@ class FullSearch:
         return (self.scorevals[-1], self.scorevals[0])
 
     def mainloop(self, predict):
+        print('predict.shape: ', predict.shape)
         assert len(predict.shape) == 2
         assert predict.shape[0] == self.sylls
-        assert predict.shape[1] == self.dict
+        assert predict.shape[1] == self.depth
 
         self.scorevals = np.array((self.pool), dtype='float32')
         self.scorepaths = np.array((self.pool, self.sylls), dtype='int32')
@@ -69,7 +70,7 @@ class FullSearch:
         batchpaths = np.zeros((self.pool, self.sylls), dtype='int32')
         #batchvals = np.zeros((self.pool), dtype='float32')
         indices = np.arange(self.sylls, dtype='int32')
-        for x in product(np.arange(self.dict, dtype='int32'), repeat=self.sylls):
+        for x in product(np.arange(self.depth, dtype='int32'), repeat=self.sylls):
             x = list(x)
             batchpaths[i % self.pool] = x
             if i % self.pool == 0:
@@ -110,19 +111,19 @@ if __name__ == "__main__":
         return out
 
     _sylls = 5
-    _dict = 7
-    predict = fib(_sylls * _dict)
+    _depth = 7
+    predict = fib(_sylls * _depth)
     predict[0] = 0
-    predict = np.reshape(predict, (_sylls, _dict))
+    predict = np.reshape(predict, (_sylls, _depth))
     print('predict: ', predict)
-    fb = FullSearch(_sylls, _sylls, _dict)
-    fb.mainloop(predict)
-    print('score[0]: {}'.format(fb.scorevals[0]))
-    print('paths[0]: {}'.format(fb.scorepaths[0]))
-    print('score[-1]: {}'.format(fb.scorevals[-1]))
-    print('paths[-1]: {}'.format(fb.scorepaths[-1]))
-    print('min {}, max {}'.format(np.min(fb.scorevals), np.max(fb.scorevals)))
-    print('vals {}'.format((fb.scorevals)))
-    print('paths {}'.format((fb.scorepaths)))
+    fs = FullSearch(_sylls, _sylls, _depth)
+    fs.mainloop(predict)
+    print('score[0]: {}'.format(fs.scorevals[0]))
+    print('paths[0]: {}'.format(fs.scorepaths[0]))
+    print('score[-1]: {}'.format(fs.scorevals[-1]))
+    print('paths[-1]: {}'.format(fs.scorepaths[-1]))
+    print('min {}, max {}'.format(np.min(fs.scorevals), np.max(fs.scorevals)))
+    print('vals {}'.format((fs.scorevals)))
+    print('paths {}'.format((fs.scorepaths)))
     
 
