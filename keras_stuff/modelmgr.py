@@ -4,6 +4,8 @@ from keras import layers
 from keras import callbacks 
 from keras.models import Model
 
+from keras_multi_head import MultiHeadAttention
+from keras_pos_embd import PositionEmbedding
 
 # handle base model, load variations from base via names and freeze the base
 class ModelManager:
