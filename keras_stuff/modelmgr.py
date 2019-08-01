@@ -92,7 +92,7 @@ class ModelManager:
         if f:
             # this was somewhat effective
             x = layers.Dropout(dropout)(x)
-            x = MultiHeadAttention(4, kernel_initializer='identity')(x)
+            x = MultiHeadAttention(2)(x)
         x = layers.Dropout(dropout)(x)
         output_layer = layers.Dense(params['max_features'], activation='softmax', name=self.dense_name)(x)
         model = Model(inputs=[hash_input], outputs=[output_layer])
