@@ -80,12 +80,12 @@ class ModelManager:
             )(x)
             x = layers.Dropout(dropout)(x)
             x = MultiHeadAttention(4)(x)
-            x = layers.Dropout(dropout/3)(x)
+            x = layers.Dropout(dropout)(x)
         x = self.get_lstm(params['units'], return_sequences=True, name=self.cu_dnnlstm_name)(x)
         if e:
             x = PositionEmbedding(
-                input_dim=params['embed_size'],
-                output_dim=24,
+                input_dim=params['units'],
+                output_dim=params['units'],
                 mode=PositionEmbedding.MODE_ADD
             )(x)
             x = layers.Dropout(dropout)(x)
