@@ -43,6 +43,12 @@ class ModelManager:
         else:
             return layers.LSTM(size, return_sequences=return_sequences, name=name)
 
+    def unfreeze(self, model, name):
+            for layer in model.layers:
+                if layer.name == name:
+                    layer.trainable=True
+                    print('Unfreezing layer: ', layer.name)
+
     # generate variations of model for experimentation
     def get_model(self, params, a=False, b=False, c=False, d=False, e=False, f=False, dropout=0.5):
         hash_input = layers.Input(shape=(params['max_words'],), dtype='int32')
