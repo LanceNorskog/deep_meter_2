@@ -9,7 +9,7 @@ from keras.models import Model
 class ModelManager:
     embedding_name='embedding_1'
     bidirectional_name='bidirectional_1'
-    cu_dnnlstm_name='cu_dnnlstm_2`'
+    cu_dnnlstm_name='cu_dnnlstm_2'
     dense_name='dense_1'
 
     def __init__(self):
