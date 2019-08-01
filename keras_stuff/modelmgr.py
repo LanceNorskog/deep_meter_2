@@ -86,7 +86,7 @@ class ModelManager:
         if f:
             # this was somewhat effective
             x = layers.Dropout(dropout)(x)
-            x = MultiHeadAttention(4)(x)
+            x = MultiHeadAttention(4, kernel_initializer='identity')(x)
         x = layers.Dropout(dropout)(x)
         output_layer = layers.Dense(params['max_features'], activation='softmax', name=self.dense_name)(x)
         model = Model(inputs=[hash_input], outputs=[output_layer])
@@ -125,6 +125,6 @@ if __name__ == "__main__":
     model_file = "/tmp/haiku_zhg_mha_5.h5"
     #modelmgr = ModelManager()
     modelmgr = ModelManager()
-    model = modelmgr.get_model(params)
+    model = modelmgr.get_model(params, f=True)
     modelmgr.load_weights(model, model_file, freeze=True)
     model.summary()
