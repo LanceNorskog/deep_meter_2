@@ -85,7 +85,7 @@ class ModelManager:
         if e:
             x = PositionEmbedding(
                 input_dim=params['embed_size'],
-                output_dim=params['embed_size'],
+                output_dim=24,
                 mode=PositionEmbedding.MODE_ADD
             )(x)
             x = layers.Dropout(dropout)(x)
