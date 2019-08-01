@@ -7,12 +7,17 @@ from keras.models import Model
 
 # handle base model, load variations from base via names and freeze the base
 class ModelManager:
+    embedding_name='embedding_1'
+    bidirectional_name='bidirectional_1'
+    cu_dnnlstm_name='cu_dnnlstm_1`'
+    dense_name='dense_1'
+
     def __init__(self):
         self.base_names = [
-            'embedding_1',
-            'bidirectional_1',
-            'cu_dnnlstm_2',
-            'dense_1',
+            embedding_name,
+            bidirectional_name,
+            cu_dnnlstm_name,
+            dense_name,
         ]
         
         pass
@@ -39,7 +44,7 @@ class ModelManager:
     # generate variations of model for experimentation
     def get_model(self, params, a=False, b=False, c=False, d=False, e=False, f=False, dropout=0.5):
         hash_input = layers.Input(shape=(params['max_words'],), dtype='int32')
-        x = layers.Embedding(params['hash_mole'], params['embed_size'], input_length=params['max_words'], name='embedding_1')(hash_input)
+        x = layers.Embedding(params['hash_mole'], params['embed_size'], input_length=params['max_words'], name=embedding_name)(hash_input)
         x = layers.Dropout(dropout/3)(x)
         if a:
             # did not train
@@ -55,7 +60,7 @@ class ModelManager:
             #x = layers.Dense(params['embed_size'])(x)
             x = layers.Dropout(dropout/3)(x)
         #if c:
-        x = layers.Bidirectional(self.get_lstm(params['units']//2, return_sequences=False, name='bidirectional_1'))(x)
+        x = layers.Bidirectional(self.get_lstm(params['units']//2, return_sequences=False, name=bidirectional_name))(x)
         x = layers.Dropout(dropout)(x)
         x = layers.RepeatVector(params['num_sylls'])(x)
         x = layers.Dropout(dropout)(x)
@@ -68,7 +73,7 @@ class ModelManager:
             x = layers.Dropout(dropout)(x)
             x = MultiHeadAttention(4)(x)
             x = layers.Dropout(dropout/3)(x)
-        x = self.get_lstm(params['units'], return_sequences=True, name='cu_dnnlstm_2')(x)
+        x = self.get_lstm(params['units'], return_sequences=True, name=cu_dnnlstm_name)(x)
         if e:
             x = PositionEmbedding(
                 input_dim=params['embed_size'],
@@ -81,7 +86,7 @@ class ModelManager:
             x = layers.Dropout(dropout)(x)
             x = MultiHeadAttention(4)(x)
         x = layers.Dropout(dropout)(x)
-        output_layer = layers.Dense(params['max_features'], activation='softmax', name='dense_1')(x)
+        output_layer = layers.Dense(params['max_features'], activation='softmax', name=dense_name)(x)
         model = Model(inputs=[hash_input], outputs=[output_layer])
         return model
 
