@@ -50,7 +50,7 @@ class ModelManager:
                     print('Unfreezing layer: ', layer.name)
 
     # generate variations of model for experimentation
-    def get_model(self, params, a=False, b=False, c=False, d=False, e=False, f=False, dropout=0.5):
+    def get_model(self, params, a=False, b=False, c=False, d=False, e=False, f=False, g=False, dropout=0.5):
         hash_input = layers.Input(shape=(params['max_words'],), dtype='int32')
         x = layers.Embedding(params['hash_mole'], params['embed_size'], input_length=params['max_words'], name=self.embedding_name)(hash_input)
         x = layers.Dropout(dropout/3)(x)
@@ -93,9 +93,11 @@ class ModelManager:
             #x = layers.Dropout(dropout)(x)
         if f:
             # this was somewhat effective
-            x = layers.Dropout(dropout)(x)
             x = MultiHeadAttention(2)(x)
-        x = layers.Dropout(dropout)(x)
+            x = layers.Dropout(dropout)(x)
+        if g:
+            x = layers.Dense(embed_size, kernel_initializer='identity')(x)
+            x = layers.Dropout(dropout)(x)
         output_layer = layers.Dense(params['max_features'], activation='softmax', name=self.dense_name)(x)
         model = Model(inputs=[hash_input], outputs=[output_layer])
         return model
