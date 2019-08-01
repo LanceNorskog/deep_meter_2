@@ -85,10 +85,12 @@ class ModelManager:
         if e:
             x = PositionEmbedding(
                 input_dim=params['embed_size'],
-                output_dim=params['num_sylls']*4,
+                output_dim=params['embed_size'],
                 mode=PositionEmbedding.MODE_ADD
             )(x)
             x = layers.Dropout(dropout)(x)
+            #x = layers.Dense(embed_size)(x)
+            #x = layers.Dropout(dropout)(x)
         if f:
             # this was somewhat effective
             x = layers.Dropout(dropout)(x)
