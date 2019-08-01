@@ -18,13 +18,15 @@ class ModelManager:
         pass
 
     # if given names, load only those names and optionally freeze them
-    def load_weights(self, model, filename, names=[], freeze=False):
-        if len(names) > 0:
+    def load_weights(self, model, filename, freeze=False):
+        if freeze:
             model.load_weights(filename, by_name=True)
             for layer in model.layers:
-                if layer.name in names:
+                if layer.name in self.base_names:
                     layer.trainable=False
                     print('Freezing layer: ', layer.name)
+                else:
+                    print('Layer name not found: ', layer.name)
         else:
             model.load_weights(self.filename)
 
@@ -117,5 +119,5 @@ if __name__ == "__main__":
     #modelmgr = ModelManager()
     modelmgr = ModelManager()
     model = modelmgr.get_model(params)
-    modelmgr.load_weights(model, model_file, names=modelmgr.base_names, freeze=True)
+    modelmgr.load_weights(model, model_file, freeze=True)
     model.summary()
