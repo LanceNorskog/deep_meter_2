@@ -18,20 +18,26 @@ def trim_homynyms(word2sylls):
 
 class Decoder:
     def __init__(self, word2sylls):
+        self.start = '<START>'
+        self.stop = '<STOP>'
+        self.pad = '<PAD>'
         wl = [w for w in word2sylls.keys()]
         wl.sort()
-        #print(wl[0:10])
-        self.word2sylls = word2sylls
+        wl = [self.start, self.stop, self.pad] + wl
+        print(wl[0:10])
+        self.word2sylls = {self.start:[], self.stop:[], self.pad:[]} 
+        for k in word2sylls.keys():
+            self.word2sylls[k] = word2sylls[k]
         big_sylls = set()
         self.wordoff = 100000
         self.sylloff = 10
         self.word2idx = {}
 
-        self.wordlist = [''] * (len(word2sylls) + self.wordoff)
-        self.wordlength = [0] * (len(word2sylls) + self.wordoff)
+        self.wordlist = [''] * (len(self.word2sylls) + self.wordoff)
+        self.wordlength = [0] * (len(self.word2sylls) + self.wordoff)
         for index, word in enumerate(wl, self.wordoff):
             self.wordlist[index] = word
-            sylls = word2sylls[word]
+            sylls = self.word2sylls[word]
             self.wordlength[index] = len(sylls)
             for syll in sylls:
                 big_sylls.add(syll)
@@ -60,7 +66,7 @@ class Decoder:
                 self.idx2word[i][j] = []
         for index, word in enumerate(wl, self.wordoff):
             j = 0
-            for syll in word2sylls[word][:max_sylls]:
+            for syll in self.word2sylls[word][:max_sylls]:
                 self.idx2word[j][self.syll2idx[syll]].append(index)
                 j += 1
 
