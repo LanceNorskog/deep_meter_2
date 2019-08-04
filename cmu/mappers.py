@@ -29,7 +29,7 @@ class Decoder:
         for k in word2sylls.keys():
             self.word2sylls[k] = word2sylls[k]
         big_sylls = set()
-        self.wordoff = 100000
+        self.wordoff = 10
         self.sylloff = 10
         self.word2idx = {}
 

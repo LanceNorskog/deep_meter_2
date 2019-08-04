@@ -23,7 +23,6 @@ class Reader:
                 _parts = line.strip().split('\t')
                 _text = _parts[0]
                 _haiku = _parts[1]
-                _sylls = []
                 _use_input = True
                 if deduplicate_haiku and _haiku == last_haiku:
                     continue
