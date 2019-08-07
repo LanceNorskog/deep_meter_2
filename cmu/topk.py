@@ -15,6 +15,23 @@ def get_top_k(predictions, top_k=5):
         indices[s] = short
     return (vals, indices)
 
+def decodewords(scorepaths, top_paths, idx2word):
+    morepaths = np.zeros(scorepaths.shape, dtype='int32')
+    for j in range(scorepaths.shape[0]):
+        #print('scorepaths[{}]: {}'.format(j, scorepaths[j]))
+        #print('top_paths.shape: ', top_paths.shape)
+        #print('top_paths[{}]: {}'.format(j, top_paths))
+        #print('top_paths[{}][]: {}'.format(j, top_paths[0][np.arange(num_sylls), scorepaths[j]]))
+        morepaths[j] = top_paths[np.arange(top_paths.shape[0]), scorepaths[j]]
+    sentences = {}
+    for j in range(scorepaths.shape[0]):
+        words = []
+        for k in range(scorepaths.shape[1]):
+            words.append(idx2word[morepaths[j][k]])
+        sentence = ' '.join(words)
+        sentences[sentence] = words
+    return sentences
+
 def decodem(scorepaths, top_paths, decoder, wordset, wordmap):
     morepaths = np.zeros(scorepaths.shape, dtype='int32')
     for j in range(scorepaths.shape[0]):
@@ -75,19 +92,29 @@ if __name__ == "__main__":
     print('vals:  ', v)
     print('inds: ', i)
 
+    from syllables_cmu import syllables
     from mappers import Decoder
     from full import FullSearch
     from wordmap import Wordmap
 
-    syllables = {'therefore':['DH EH R', 'F AO R'], 'the':['DH AH'], 'mugger':['M AH', 'G ER'], 'is': ['IH Z'], 'there':['DH EH R'], 'for':['F AO R'], 'me':['M IY']}
     decoder = Decoder(syllables)
-    top_k = 9
+
+    idx2word = [''] * 50
+    for i in range(50):
+        idx2word[i] = str(i)
+    
+
+    top_k = 2
     num_sylls = 5
     num_dict = 15
     fs = FullSearch(num_sylls * 2, num_sylls, top_k)
     (top_vals, top_paths) = get_top_k(np.zeros((num_sylls, num_dict), dtype='float32'), top_k=top_k)
+    print('top_paths.shape ', top_paths.shape)
     fs.mainloop(top_paths)
     haikuwordset = set()
     wordmap = Wordmap(100)
-    sentences = decodem(fs.scorepaths, top_paths, decoder, haikuwordset, wordmap)
-    
+    # sentences = decodem(fs.scorepaths, top_paths, decoder, haikuwordset, wordmap)
+    sentences = decodewords(fs.scorepaths, top_paths, idx2word)
+    print('Sentences:')
+    for s in sentences.keys():
+        print('... ', s)
