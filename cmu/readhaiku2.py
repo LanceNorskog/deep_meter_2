@@ -86,7 +86,7 @@ class Reader:
         indexes = np.ones((len(big_input), max_words + 2), dtype='int32')
         for i in range(len(big_input)):
             indexes[i][0] = 0
-            j = 0
+            j = 1
             for w in big_input[i].split():
                 if j == max_words:
                     print('haiku too long? ', big_input[i])
