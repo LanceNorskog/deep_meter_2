@@ -71,10 +71,11 @@ class Reader:
     # use "hashing trick" for input indexes
     # could be long text or haiku
     def gethash(self, big_input, max_words=10, hash_mole=20000):
-        hashed = np.zeros((len(big_input), max_words), dtype='float32')
+        hashed = np.ones((len(big_input), max_words + 2), dtype='float32')
         for i in range(len(big_input)):
-            j = 0
-            for h in text.hashing_trick(big_input[i], hash_mole, hash_function='md5'):
+            hashed[i][0] = 0
+            j = 1
+            for h in text.hashing_trick(big_input[i], hash_mole - 2, hash_function='md5'):
                 if j == max_words:
                     print('haiku too long? ', big_input[i])
                 hashed[i][j] = h
@@ -82,8 +83,9 @@ class Reader:
         return hashed
 
     def getindexes(self, big_input, max_words=10):
-        indexes = np.zeros((len(big_input), max_words), dtype='int32')
+        indexes = np.ones((len(big_input), max_words + 2), dtype='int32')
         for i in range(len(big_input)):
+            indexes[i][0] = 0
             j = 0
             for w in big_input[i].split():
                 if j == max_words:
