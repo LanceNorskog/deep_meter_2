@@ -75,7 +75,7 @@ class Reader:
         for i in range(len(big_input)):
             hashed[i][0] = 0
             j = 1
-            for h in text.hashing_trick(big_input[i], hash_mole - 2, hash_function='md5'):
+            for h in text.hashing_trick(big_input[i], hash_mole, hash_function='md5'):
                 if j == max_words:
                     print('haiku too long? ', big_input[i])
                 hashed[i][j] = h
