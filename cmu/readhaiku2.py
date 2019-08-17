@@ -78,6 +78,7 @@ class Reader:
             for h in text.hashing_trick(big_input[i], hash_mole, hash_function='md5'):
                 if j == max_words:
                     print('input too long? ', big_input[i])
+                    break
                 hashed[i][j] = h
                 j += 1
         return hashed
@@ -88,8 +89,9 @@ class Reader:
             indexes[i][0] = 0
             j = 1
             for w in big_input[i].split():
-                if j == max_words:
+                if j > max_words:
                     print('haiku too long? ', big_input[i])
+                    break
                 indx = self.decoder.word2idx[w]
                 indexes[i][j] = indx
                 j += 1
