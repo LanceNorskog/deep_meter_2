@@ -103,6 +103,27 @@ def strip(t, labs):
     walk(t)
     return t
 
+# given ((((lab(x, sublab))))) return ((((lab(sublab)))))
+# example: given adjective phrase (adjp (baby blue)) -> drop baby, keep blue
+def retain(t, lab, sublab):
+    def walk(t):
+        if type(t) == type('') or type(t[0]) == type(''):
+            return 
+        for i in range(len(t)):
+            if t[i].label() == lab:
+                for j in range(len(t[i])):
+                    if t[i][j].label() == sublab:
+                        # Yes, it really does have to work this way!
+                        t[i] = Tree.fromstring('(' + lab + ' ' + str(t[i][j]) + ')')
+                        break 
+            if type(t[i]) != type('str'):
+                walk(t[i])
+    
+    t = t.copy(deep=True)
+    walk(t)
+    return t
+
+
 # given a parse tree, return all subtrees with any and all given label subtrees removed
 def combos(t, labs):
     global num_combo
@@ -170,3 +191,7 @@ if __name__ == '__main__':
     #        for c in clauses(t2, _min=2, _max=5, _minlen=3):
     #            print('> {}'.format(c))
     ##    
+    sample = "(NP (ADJP (NN baby) (JJ blue)))"
+    t = Tree.fromstring(sample)
+    print('Sample: ', str(t))
+    print('No baby: ', str(retain(t, 'ADJP', 'JJ')))
